@@ -11,7 +11,9 @@ var apiBase = "http://"+server+"/api";
 var direc = {
 
     direcciones: apiBase + "/direccion",
-    territorios: apiBase + "/territorios"
+    territorios: apiBase + "/territorios",
+    zonas: apiBase + "/zonas"
+
 };
 
 

@@ -1,0 +1,33 @@
+<ion-view view-title="Nueva Zona">
+  <ion-content>
+   <form name="locationForm" ng-submit="guardarZona()">
+        <div class="list">
+ <div class="details" style="margin:8px; text-align: center;">
+            
+        <div class="card">
+            
+            <div class="item item-divider">
+                Nombre
+            </div>
+            <div class="item item-text-wrap">
+                  <input type="text" ng-model="newZona.nombre" placeholder="Nombre" ng-minlength="1" ng-maxlength="100" required>
+            </div> 
+        <label class = "item item-input item-select">
+           <div class = "input-label">
+              Teritorios
+           </div>
+          
+           <select ng-model="newZona.territorio" ng-options="territorio._id as territorio.nombre for territorio in territorios">
+                <option style="display:none" value="">Seleccione un territorio</option>
+           </select>
+        </label>
+
+            
+			 <div class="item item-divider">
+			  		<button class="button button-block button-positive" ng-disabled="locationForm.$invalid"> Guardar Zona</button>
+			 </div> 
+			
+                </form> 
+        </div>
+  </ion-content>
+</ion-view>

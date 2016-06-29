@@ -32,13 +32,14 @@ return{
 
 				ejecutar: {
 					method:method,
-					url:direc.territorios,
-					isArray:array,
+					url:direc.territorios+"/"+id,
+					isArray:false,
 					header:{"Content-Type":"application/json"}
 				}
 			});
 
 		}
+
 
 }
 

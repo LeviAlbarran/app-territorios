@@ -1,6 +1,7 @@
 app.controller('MapController',
   [ '$scope',
     '$ionicActionSheet',
+    '$ionicLoading',
     '$timeout',
     '$compile',
     '$cordovaGeolocation',
@@ -9,12 +10,14 @@ app.controller('MapController',
     '$ionicPopup',
     '$rootScope',
     'directionService',
-   
+    'territoriosService',
+    'zonasService',
     'InstructionsService',
-    "leafletMarkerEvents",
+  
     function(
       $scope,
       $ionicActionSheet,
+      $ionicLoading,
       $timeout,
       $compile,
       $cordovaGeolocation,
@@ -23,34 +26,144 @@ app.controller('MapController',
       $ionicPopup,
       $rootScope,
       directionService,
-      InstructionsService,
-      leafletMarkerEvents
+      territoriosService,
+      zonasService,
+      InstructionsService
+
       ) {
 
 
   $scope.locationsObj = {};
 
-  $scope.locationsObj.savedLocations = [
-    {
-      nombre : "Salon del Reino",
-      lat : 10.6544082,
-      lng : -71.6996923,
-      visitas:{
-        publicador:"Levi"
-      }
-    }
-  ];
+  $scope.locationsObj.savedLocations = [];
 
 
 
 
+    
+  //      var myLatlng = new google.maps.LatLng(10.5732857, -71.6487104);
+       var myLatlng = { lat: 10.5732857, lng: -71.6487104 };
+ 
+        var mapOptions = {
+            center: new google.maps.LatLng(10.5732857, -71.6487104),
+            zoom: 18,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            navigationControl: true,
+            streetViewControl: true
+        };
+ 
+ 
+
+     //  $scope.verDireciones();
+     //  $scope.locate(); 
+
+    
+
+angular.element(document).ready(function () {
+      console.log("sad");
+      $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+      
+
+          google.maps.event.addListener($scope.map, 'rightclick', function(event) {
+
+                console.log(event.latLng);
+                var lat = event.latLng.lat();
+                var lng = event.latLng.lng();
+                $scope.newLocation = new Location();
+                $scope.newLocation.lat = lat;
+                $scope.newLocation.lng = lng;
+                $scope.modal.show();
+              
+
+
+          });
+
+ });
+
+    $scope.marcarAqui = function(){
+       positionCenter = $scope.map.getCenter();
+      console.log(positionCenter);
+      var lat = positionCenter.lat();
+      var lng = positionCenter.lng();
+      console.log(lat);
+      console.log(lng);
+      $scope.newLocation = new Location();
+      $scope.newLocation.lat = lat;
+      $scope.newLocation.lng = lng;
+      $scope.toggle();
+      $scope.modal.show();
+    };
+
+   $scope.toggle = function () {
+      $scope.state = !$scope.state;
+    };
+
+ $scope.marker = [];
+
+$scope.toggleMostrarDirecciones = function(){
+  if($scope.toggleMostrarDirecciones.checked){
+      // $scope.showLoanding();
+      $scope.verDireciones();
+     // $scope.hideLoanding();
+  }else{
+  
+    console.log($scope.marker)
+   for (var k = 1; k < $scope.marker.length; k++) {
+    $scope.marker[k].setMap(null);
+  }
+
+      $scope.locationsObj.savedLocations.splice(0);
+      
+  }
+};
+
+
+$scope.showLoanding = function() {
+    $ionicLoading.show({
+      template: '<ion-spinner icon="android"></ion-spinner>'
+    }).then(function(){
+       console.log("The loading indicator is now displayed");
+    });
+  };
+
+
+  $scope.hideLoanding = function(){
+    $ionicLoading.hide().then(function(){
+       console.log("The loading indicator is now hidden");
+    });
+  };
+
+
+
+   zonasService.todasZonas('get').ejecutar(function (data) {
+                           console.log(data);
+                          $scope.zonas=data;
+
+                        }, function (error) {
+                            alert(error);
+                            alert('Ha ocurrido un error');
+                      });
+
+   territoriosService.todosTerritorios('get').ejecutar(function (data) {
+                           console.log(data);
+                          $scope.territorios=data;
+
+                        }, function (error) {
+                            alert(error);
+                            alert('Ha ocurrido un error');
+                      });
+
+$scope.verDireciones = function () {  
    directionService.todasDirecciones('get').ejecutar(function (data) {
                            console.log(data);
                           // console.log(data.length);
                           for (i = 0; i < data.length; i++) {  
                            $scope.locationsObj.savedLocations.push(data[i]);
-                           console.log(data[i]);
-                           $scope.goTo($scope.locationsObj.savedLocations.length - 1);
+                            
+
+                           console.log(i)
+                           console.log(data[i]);                   
+                           $scope.marcarDirecciones(i);
 
                           }
                           console.log($scope.locationsObj)
@@ -59,6 +172,8 @@ app.controller('MapController',
                             alert(error);
                             alert('Ha ocurrido un error');
                       });
+};
+  
 
       $scope.$on("$stateChangeSuccess", function() {
 
@@ -77,48 +192,8 @@ app.controller('MapController',
 
         }
 
-      $scope.locate();
 
-           $scope.map = {
-          defaults: {
-            //tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-            maxZoom: 18,
-            zoomControlPosition: 'bottomleft'
-          },
-          markers : {},
-          awesomeMarkerIcon: {
-                    type: 'awesomeMarker',
-                    icon: 'tag',
-                    markerColor: 'red'
-                },
-          events: {
-            map: {
-              enable: ['context'],
-              logic: 'emit'
-            }
-          },
-
-           layers: {
-                    baselayers: {
-                        googleTerrain: {
-                            name: 'Calles',
-                            layerType: 'ROADMAP',
-                            type: 'google'
-                        },
-                        googleHybrid: {
-                          name: 'Terreno',
-                          layerType: 'HYBRID',
-                          type: 'google'
-                      }
-                    }
-                }
-
-        
-           
-          
-        };
-
-        $scope.goTo(0);
+       
 
       });
 
@@ -128,6 +203,14 @@ app.controller('MapController',
         this.lat  = "";
         this.lng  = "";
         this.nombre = "";
+        this.genero = "";
+        this.condicion = "";
+        this.zona = "";
+        this.publicador = "";
+        this.comentarios = "";
+        this.territorio = "";
+        this.id = "";
+        
       };
 
 
@@ -149,23 +232,23 @@ app.controller('MapController',
 
       /**
        * Detect user long-pressing on map to add new location
-       */
+       
       $scope.$on('leafletDirectiveMap.contextmenu', function(event, locationEvent){
         $scope.newLocation = new Location();
         $scope.newLocation.lat = locationEvent.leafletEvent.latlng.lat;
         $scope.newLocation.lng = locationEvent.leafletEvent.latlng.lng;
         $scope.modal.show();
       });
-
+*/
       $scope.saveLocation = function() {
         direccion = JSON.stringify($scope.newLocation);
         console.log(direccion);
-
+        console.log($scope.locationsObj.savedLocations);
         directionService.todasDirecciones('post').ejecutar(direccion, function (data) {
                            console.log(data); 
                             $scope.locationsObj.savedLocations.push($scope.newLocation);
                             $scope.modal.hide();
-                            $scope.goTo($scope.locationsObj.savedLocations.length - 1);
+                            $scope.marcarDirecciones($scope.locationsObj.savedLocations.length -1);
                         }, function (error) {
                             alert(error);
                             alert('Ha ocurrido un error');
@@ -178,13 +261,20 @@ app.controller('MapController',
       };
 
 
-  $scope.eliminarLocation = function(idDireccion) {
+  $scope.eliminarLocation = function(idDireccion, j) {
        
-        console.log(idDireccion);
+          //  $scope.marker[j].setMap(null);
 
         directionService.unaDireccion('delete', idDireccion).ejecutar(function (data) {
                             console.log('eliminado'); 
-                           console.log(data); 
+                            console.log(data); 
+                              for (var k = 1; k < $scope.marker.length; k++) {
+                                $scope.marker[k].setMap(null);
+                              }
+                              $scope.locationsObj.savedLocations.splice(0);                                  
+                              $scope.verDireciones();
+
+                           
                             }, function (error) {
                             alert(error);
                             alert('Ha ocurrido un error');
@@ -199,7 +289,7 @@ app.controller('MapController',
 
 
       $scope.modifierLocation = function() {
-      
+     
         direccionModifier = JSON.stringify($scope.modifierLocation);
         console.log(direccionModifier);
 
@@ -224,80 +314,73 @@ app.controller('MapController',
        * Center map on specific saved location
        * @param locationKey
        */
-      $scope.goTo = function(locationKey) {
-
-        var location = $scope.locationsObj.savedLocations[locationKey];
-
-
-        $scope.map.center  = {
-          lat : location.lat,
-          lng : location.lng,
-          zoom : 15
-        };
-
-        html= '<div id="compilar"><b>'+location.nombre+'</b><br></div>';
         
-        if(location._id){
+infowindow = new google.maps.InfoWindow({
+                content: "loading..."
+            });
 
-          idLocationText=location._id.substr(21);
-          $scope.map.markers[locationKey] = {
-              
-     
-          lat:location.lat,
-          lng:location.lng,
-          message: html,
-          focus: true,
-          draggable: false,
-          label: {
-                  message: idLocationText,
-                     options: {
-                            noHide: true
-                      }
-                  }
+
+      
+      var j = 0;
+      $scope.marcarDirecciones = function(locationKey) {
+        
+          j = j + 1
+          var location = $scope.locationsObj.savedLocations[locationKey];
+          console.log(location);
+          var latitud = parseFloat(location.lat.toFixed(14));
+          var longitud = parseFloat(location.lng.toFixed(14));
+          console.log(latitud);
+          console.log(longitud);
+          var locationMarker = {lat: latitud, lng: longitud};
+
+          //$scope.contentString = location.nombre;
+            infowindow = new google.maps.InfoWindow({
+            content: location.nombre
+          });
+
+          var label;
+          if(location.id){
+            label = location.id;
+          }
+          else{
+            label = ".";
+          }
+
+
+         $scope.marker[j] = new google.maps.Marker({
+                position: locationMarker,
+                map: $scope.map,
+                title: location.nombre,
+                label: " " +location.id + " ",
+                animation: google.maps.Animation.DROP
+              });
+
+         $scope.marker[j].setMap($scope.map);
+
+      /*  $scope.marker[j].addListener('click', function() {
+            $scope.infowindow.open($scope.map, $scope.marker[j]);
+          });
+*/
+          google.maps.event.addListener($scope.marker[j], "click", function () {
+              //  alert(this.html);
+                infowindow.setContent(location.nombre);
+                infowindow.open($scope.map, this);
+            });
+
           
-        };
-        }else{    
-        $scope.map.markers[locationKey] = {
-              
-     
-          lat:location.lat,
-          lng:location.lng,
-          message: html,
-          focus: true,
-          draggable: false
-          
-        };
+          google.maps.event.addListener($scope.marker[j], 'rightclick', function() {
+             console.log(location);         
+             $scope.show(location, j);
+          });
+
         }
-      
-      
+       
 
-      };
+  
 
-        $scope.events = {
-                markers: {
-                    enable: leafletMarkerEvents.getAvailableEvents(),
-                }
-            };
 
-            var markerEvents = leafletMarkerEvents.getAvailableEvents();
-            for (var k in markerEvents){
-                var eventName = 'leafletDirectiveMarker.' + markerEvents[k];
-                $scope.$on(eventName, function(event, args){
-
-                 if (event.name == 'leafletDirectiveMarker.contextmenu'){
-                  console.log(k);
-                    console.log(args);
-                    
-                    var PosicionArrayDir=args.modelName;
-                    $scope.show(PosicionArrayDir);
-                    //alert(event.name);
-                 }
-
-                });
-            }
-
-          $scope.show = function(PosicionArrayDir) {
-             var location=$scope.locationsObj.savedLocations[PosicionArrayDir]; //Ubicar posicion en el arreglo que contione toda la informacion de la direccion         
+          $scope.show = function(location, j) {
+      //      var location=$scope.locationsObj.savedLocations[PosicionArrayDir]; //Ubicar posicion en el arreglo que contione toda la informacion de la direccion         
              // Show the action sheet
              var hideSheet = $ionicActionSheet.show({
                buttons: [
@@ -315,6 +398,13 @@ app.controller('MapController',
                     case 0:
                         //Modificar
                         $scope.idModifierDireccion = location._id;
+                        $scope.modifierLocation.id = location.id;
+                        $scope.modifierLocation.territorio = location.territorio;
+                        $scope.modifierLocation.genero = location.genero;
+                        $scope.modifierLocation.edificacion = location.edificacion;
+                        $scope.modifierLocation.zona = location.zona;
+                        $scope.modifierLocation.condicion = location.condicion;
+                        $scope.modifierLocation.publicador = location.publicador;
                         $scope.modifierLocation.nombre = location.nombre;
                         $scope.modifierLocation.comentarios = location.comentarios;
                         $scope.modifierLocation.direccion = location.direccion;
@@ -332,8 +422,9 @@ app.controller('MapController',
                         eliminarDireccionPopup.then(function(res) {
                          if(res) {
                          console.log(location._id);
-                          $scope.eliminarLocation(location._id); //enviar el _id mongo para eliminar
-                          $scope.locationsObj.savedLocations.splice(PosicionArrayDir); //eliminar del arreglo que contiene la informacion tomando en cuenta la posiscion dentro el mismo
+                          $scope.eliminarLocation(location._id, j); //enviar el _id mongo para eliminar
+                          //$scope.locationsObj.savedLocations.splice(PosicionArrayDir); //eliminar del arreglo que contiene la informacion tomando en cuenta la posiscion dentro el mismo
+                         
                           $scope.locate(); //Volver a localizarme
                          
 
@@ -354,29 +445,34 @@ app.controller('MapController',
 
            }; 
 
+    
 
 
+       $scope.goTo= function(locationKey){
+        console.log(locationKey);
+         var location = $scope.locationsObj.savedLocations[locationKey];
+         console.log(location)
+             $scope.marker[locationKey].setAnimation(google.maps.Animation.BOUNCE);
+        $scope.map.setCenter(new google.maps.LatLng(location.lat, location.lng));
+
+       };
 
 
-      /**
-       * Center map on user's current position
-       */
       $scope.locate = function(){
 
         $cordovaGeolocation
           .getCurrentPosition()
           .then(function (position) {
-            $scope.map.center.lat  = position.coords.latitude;
-            $scope.map.center.lng = position.coords.longitude;
-            $scope.map.center.zoom = 15;
 
-            $scope.map.markers.now = {
-              lat:position.coords.latitude,
-              lng:position.coords.longitude,
-              message: "Tu estás aqui",
-              focus: true,
-              draggable: false
-            };
+            var myPosition = {lat: position.coords.latitude, lng: position.coords.longitude};
+            console.log(myPosition);
+            $scope.marker = new google.maps.Marker({
+                position: myPosition,
+                map: $scope.map,
+                title: 'Tu esta Aqui'
+              });
+
+         $scope.map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
 
           }, function(err) {
             // error

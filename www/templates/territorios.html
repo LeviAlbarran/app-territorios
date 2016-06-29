@@ -1,10 +1,12 @@
+<ion-view view-title="Territorios">
+  <ion-content>
 <ion-list>
 
-        <ion-item nav-clear menu-close ng-repeat="(locationKey,location) in locations track by location.nombre">
-          {{location.nombre}}
+        <ion-item nav-clear menu-close ng-repeat="territorio in territorios track by territorio._id" href="#/app/territorios/{{territorio._id}}">
+          {{territorio.nombre}}
         </ion-item>
 
 </ion-list>
-<button class="button button-large icon-left ion-star button-positive" style="-webkit-border-radius: 100px;
--moz-border-radius: 100px;
-border-radius: 100px; position: fixed; top: 10px;"></button>
+<a class="button button-block button-large icon-right ion-plus-round button-positive" href="#/app/nuevoTerritorio" style="position: fixed; bottom: 10px;" > Nuevo Territorio</a>
+  </ion-content>
+</ion-view>

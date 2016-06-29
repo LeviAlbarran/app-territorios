@@ -1,0 +1,12 @@
+<ion-view view-title="Zonas">
+  <ion-content>
+<ion-list>
+
+        <ion-item nav-clear menu-close ng-repeat="zona in zonas track by zona._id" href="#/app/zonas/{{zona._id}}">
+          {{zona.nombre}}
+        </ion-item>
+
+</ion-list>
+<a class="button button-block button-large icon-right ion-plus-round button-positive" href="#/app/nuevaZona" style="position: fixed; bottom: 10px;" > Nueva zona</a>
+	</ion-content>
+</ion-view>

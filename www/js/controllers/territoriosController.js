@@ -1,5 +1,5 @@
 app.controller('territoriosController',
-  [ '$scope',
+   [ '$scope',
     '$ionicActionSheet',
     '$timeout',
     '$compile',

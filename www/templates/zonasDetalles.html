@@ -1,0 +1,35 @@
+<ion-view view-title="Zonas">
+  <ion-content>
+   <form >
+        <div class="list">
+ <div class="details" style="margin:8px; text-align: center;">
+            <h3>{{zona.nombre}}</h3>
+            <br/>
+ 		<hr>
+        <div class="card">
+         
+            <div class="item item-divider">
+                Nombre
+            </div>
+            <div class="item item-text-wrap">
+                  <input type="text" ng-model="zona.nombre" id="zona.nombre" value="{{zona.nombre}}" placeholder="{{zona.nombre}}">
+            </div>
+                 <div class="item item-divider">
+                Territorios
+            </div>
+           
+          <label class = "item item-input item-select">
+          .
+           <select ng-model="zona.territorio" ng-options="territorio._id as territorio.nombre for territorio in territorios">
+                <option style="display:none" value="">Seleccione un territorio</option>
+           </select>
+        </label>
+			 <div class="item item-divider">
+                    <a class="button button-block button-assertive" ng-click="eliminarZona()"> Eliminar</a>
+			  		<a class="button button-block button-positive" ng-click="modificarZona()"> Guardar Cambios</a>
+			 </div> 
+			
+                </form> 
+        </div>
+  </ion-content>
+</ion-view>

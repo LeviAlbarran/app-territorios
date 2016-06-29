@@ -14,16 +14,75 @@
     <form name="locationForm" ng-submit="saveLocation()">
 
       <div class="list">
-
-        <label class="item item-input">
-                    <input type="text" ng-model="newLocation.nombre" placeholder="Nombre" ng-minlength="1" ng-maxlength="100" required>
+       <label class="item item-input">
+                    <input type="number" ng-model="newLocation.id" placeholder="ID" ng-minlength="1" ng-maxlength="100" required>
         </label>
+        <div class="row">
+            <div class="col">
+            <label class = "item item-input item-select">
+                <div class = "input-label">
+                    Nombre
+                </div>
+                <select ng-model="newLocation.genero" >
+                <option style="display:none" value=""></option>
+                    <option  value="Sr"  ng-selected="selected">Sr</option>
+                    <option  value="Sra">Sra</option>
+                    <option  value="Flia">Flia</option>
+               </select>  
+            </label>
+            </div>
+            <div class="col ">
+                <label class="item item-input">
+                <input type="text" ng-model="newLocation.nombre" placeholder="Nombre" ng-minlength="1" ng-maxlength="100" required>
+                  </label>    
+            </div>
+            
+        </div>    
+              <label class = "item item-input item-select">
+                    <div class = "input-label">
+                          Condicion
+                    </div>
+                    <select ng-model="newLocation.condicion" >
+                          <option style="display:none" value="">Seleccione condicion</option>
+                          <option  value="Nativo">Nativo</option>
+                          <option  value="Decendiente">Decendiente</option>
+                     </select>
+                </label>
+
           <label class="item item-input">
                     <input type="text" ng-model="newLocation.direccion" placeholder="direccion" ng-minlength="1" ng-maxlength="100" required>
         </label>
+        <label class = "item item-input item-select">
+                      <div class = "input-label">
+                            Edificacion
+                      </div>
+                     <select ng-model="newLocation.edificacion" >
+                      <option style="display:none" value="">Seleccione edificacion</option>
+                      <option  value="Casa">Casa</option>
+                      <option  value="Edificio">Edificio</option>
+                      <option  value="Local">Local</option>
+                      <option  value="Otro">Otro</option>
+                 </select>  
+               </label>
+
+         <label class = "item item-input item-select">
+           <div class = "input-label">
+              Zona
+           </div>
+          
+           <select ng-model="newLocation.zona" ng-options="zona._id as zona.nombre for zona in zonas">
+                <option style="display:none" value="">Seleccione un zona</option>
+           </select>
+        </label>
+        
+        
         <label class="item item-input">
                     <input type="text" ng-model="newLocation.comentarios" placeholder="comentarios" ng-minlength="1" ng-maxlength="100" required>
         </label>
+                 
+       
+       
+        
 
         <div class="item tabs tabs-secondary tabs-icon-left">
           <a class="tab-item" href="#">
