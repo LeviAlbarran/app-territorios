@@ -36,7 +36,7 @@ app.controller('MapController',
   $scope.locationsObj = {};
 
   $scope.locationsObj.savedLocations = [];
-
+  
 
 
 
@@ -49,7 +49,23 @@ app.controller('MapController',
             zoom: 18,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             navigationControl: true,
-            streetViewControl: true
+            streetViewControl: true,
+
+            mapTypeControl: true,
+            mapTypeControlOptions: {
+                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                position: google.maps.ControlPosition.TOP_LEFT
+            },
+            zoomControl: true,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_CENTER
+            },
+            scaleControl: true,
+            streetViewControl: true,
+            streetViewControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_CENTER
+            }
+
         };
  
  
@@ -287,9 +303,25 @@ $scope.verDireciones = function () {
       };
 
 
+      $scope.submitModifierLocation = function() {
+           direccionModifier = JSON.stringify($scope.modifierLocation);
+        console.log(direccionModifier);
 
-      $scope.modifierLocation = function() {
-     
+        directionService.unaDireccion('put', $scope.idModifierDireccion).ejecutar(direccionModifier, function (data) {
+                           console.log('modificado')
+                           console.log(data);
+                              $scope.locationsObj.savedLocations.splice(0);                                  
+                              $scope.verDireciones(); 
+                            $scope.modalModifier.hide();
+                    
+                        }, function (error) {
+                            console.log(error);
+                            alert('Ha ocurrido un error');
+                      });
+      };
+
+/*       $scope.modifierLocation = function() {
+    
         direccionModifier = JSON.stringify($scope.modifierLocation);
         console.log(direccionModifier);
 
@@ -303,11 +335,11 @@ $scope.verDireciones = function () {
                             alert('Ha ocurrido un error');
                       });
 
-
+*/
 
      //   $scope.locationsObj.savedLocations.push($scope.newLocation);
        
-      };
+   //   };
 
 
       /**
@@ -396,6 +428,7 @@ infowindow = new google.maps.InfoWindow({
                buttonClicked: function(index) {
                 switch (index) {
                     case 0:
+                        $scope.modifierLocation = {};
                         //Modificar
                         $scope.idModifierDireccion = location._id;
                         $scope.modifierLocation.id = location.id;
@@ -410,6 +443,7 @@ infowindow = new google.maps.InfoWindow({
                         $scope.modifierLocation.direccion = location.direccion;
                         $scope.modifierLocation.lat = location.lat;
                         $scope.modifierLocation.lng = location.lng;
+                        // console.log(modifierLocation.id);
                         $scope.modalModifier.show();
 
                     break;
@@ -466,10 +500,11 @@ infowindow = new google.maps.InfoWindow({
 
             var myPosition = {lat: position.coords.latitude, lng: position.coords.longitude};
             console.log(myPosition);
-            $scope.marker = new google.maps.Marker({
+            $scope.markerMyPosition = new google.maps.Marker({
                 position: myPosition,
                 map: $scope.map,
-                title: 'Tu esta Aqui'
+                title: 'Tu estas Aqui',
+                 icon: './images/marker_myposition.png'
               });
 
          $scope.map.setCenter(new google.maps.LatLng(position.coords.latitude, position.coords.longitude));
