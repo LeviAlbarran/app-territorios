@@ -30,17 +30,19 @@
       <div id="containerMap"  style="height: 100%; width:100%"> 
         <div id="map" data-tap-disabled="true" style="height: 100%; width:100%"></div>
       </div>
-      <div style="position: fixed; top: 5px;  z-index:999;">
-          <ion-toggle ng-model="toggleMostrarDirecciones.checked" ng-change="toggleMostrarDirecciones()">
+      
+          <ion-toggle ng-model="toggleMostrarDirecciones.checked" ng-change="toggleMostrarDirecciones()" style="display:none; position: fixed; top: 110px; z-index:999; right: 5px;">
               Direcciones
           </ion-toggle>
-      </div>
-      <button class="button button-block button-balanced" ng-show="state"  style="bottom: 5px; position: fixed;" ng-click="marcarAqui()">
+      
+      <button class="button button-block button-balanced" ng-show="state"  style="bottom: 5px; position: fixed;  right: 0px; left: 0px; margin: auto;" ng-click="marcarAqui()">
            Marcar Aqui
       </button>
-      <div style="position: fixed;">
-        <img src="images/marker.png" ng-show="state" style="position: fixed; height: 41px;top: -41px; bottom: 0; right: 0; left: 0; margin-right: auto; margin-left: auto; margin-top: auto; margin-bottom: auto; z-index:999;">
-      </div>
+      <!--
+        <img src="images/marker.png" ng-show="state" style="position: fixed; height: 41px; top: 100px; bottom: 100px; right: 0px; left: 0px; margin-right: auto; margin-left: auto; margin-top: auto; margin-bottom: auto; z-index:999;">
+      -->
+       <img src="images/marker.png" ng-show="state" style="position: fixed; height: 41px; top: 50%; margin-top: 20px; z-index: 999; width: auto; left: 50%; margin-left: -13px;">
+
        </ion-content>
 
 </ion-view>

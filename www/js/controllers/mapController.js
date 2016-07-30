@@ -78,8 +78,10 @@ app.controller('MapController',
 angular.element(document).ready(function () {
       console.log("sad");
       $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-      
+    
 
+  // al dejar por un tiempo pulsado en el mapa se crea la direccion nueva direccion   
+/*
           google.maps.event.addListener($scope.map, 'rightclick', function(event) {
 
                 console.log(event.latLng);
@@ -89,10 +91,14 @@ angular.element(document).ready(function () {
                 $scope.newLocation.lat = lat;
                 $scope.newLocation.lng = lng;
                 $scope.modal.show();
-              
+           
 
 
           });
+  */ 
+
+  $scope.verDireciones();
+
 
  });
 
@@ -115,6 +121,7 @@ angular.element(document).ready(function () {
     };
 
  $scope.marker = [];
+
 
 $scope.toggleMostrarDirecciones = function(){
   if($scope.toggleMostrarDirecciones.checked){
@@ -400,7 +407,7 @@ infowindow = new google.maps.InfoWindow({
             });
 
           
-          google.maps.event.addListener($scope.marker[j], 'rightclick', function() {
+          google.maps.event.addListener($scope.marker[j], 'dblclick', function() {
              console.log(location);         
              $scope.show(location, j);
           });

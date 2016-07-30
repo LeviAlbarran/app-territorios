@@ -17,27 +17,23 @@
        <label class="item item-input">
                     <input type="number" ng-model="newLocation.id" placeholder="ID" ng-minlength="1" ng-maxlength="100" required>
         </label>
-        <div class="row">
-            <div class="col">
-            <label class = "item item-input item-select">
+        <label class = "item item-input item-select">
                 <div class = "input-label">
-                    Nombre
+                    Genero
                 </div>
                 <select ng-model="newLocation.genero" >
-                <option style="display:none" value=""></option>
+                <option style="display:none" value="">Seleccione</option>
                     <option  value="Sr"  ng-selected="selected">Sr</option>
                     <option  value="Sra">Sra</option>
                     <option  value="Flia">Flia</option>
                </select>  
             </label>
-            </div>
-            <div class="col ">
-                <label class="item item-input">
+
+       
+            <label class="item item-input">
                 <input type="text" ng-model="newLocation.nombre" placeholder="Nombre" ng-minlength="1" ng-maxlength="100" required>
-                  </label>    
-            </div>
-            
-        </div>    
+            </label>    
+             
               <label class = "item item-input item-select">
                     <div class = "input-label">
                           Condicion
