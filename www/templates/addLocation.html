@@ -15,6 +15,9 @@
 
       <div class="list">
        <label class="item item-input">
+                <div class = "input-label">
+                  ID
+                </div>
                     <input type="number" ng-model="newLocation.id" placeholder="ID" ng-minlength="1" ng-maxlength="100" required>
         </label>
         <label class = "item item-input item-select">
@@ -39,7 +42,7 @@
                           Condicion
                     </div>
                     <select ng-model="newLocation.condicion" >
-                          <option style="display:none" value="">Seleccione condicion</option>
+                          <option style="display:none" value="">Seleccione</option>
                           <option  value="Nativo">Nativo</option>
                           <option  value="Decendiente">Decendiente</option>
                      </select>
@@ -53,7 +56,7 @@
                             Edificacion
                       </div>
                      <select ng-model="newLocation.edificacion" >
-                      <option style="display:none" value="">Seleccione edificacion</option>
+                      <option style="display:none" value="">Seleccione</option>
                       <option  value="Casa">Casa</option>
                       <option  value="Edificio">Edificio</option>
                       <option  value="Local">Local</option>
@@ -67,7 +70,7 @@
            </div>
           
            <select ng-model="newLocation.zona" ng-options="zona._id as zona.nombre for zona in zonas">
-                <option style="display:none" value="">Seleccione un zona</option>
+                <option style="display:none" value="">Seleccione</option>
            </select>
         </label>
         

@@ -1,0 +1,40 @@
+
+<ion-view title="Direcciones">
+
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  
+
+  <ion-nav-buttons side="right">
+    <button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
+  </ion-nav-buttons>
+
+  
+
+  <ion-header-bar class="bar-light bar-subheader">
+      <input type="search" placeholder="Buscar direccion..." ng-model="search" ng-keyup="count = count + 1" ng-init="count=0">
+    </ion-header-bar>
+
+  
+
+  <ion-content data-tap-disabled="true">
+ 	<ion-list style="position:absolute;" >
+
+        <ion-item nav-clear menu-close ng-click="goTo(locationKey)" ng-repeat="(locationKey,location) in locations | filter:search"  ng-show="count > 2" class="ng-hide" ng-hide="!search.length">
+          {{location.nombre}}
+        </ion-item>
+
+      </ion-list>
+      <div id="containerMap"  style="height: 100%; width:100%"> 
+        <div id="mapDirecciones" data-tap-disabled="true" style="height: 100%; width:100%"></div>
+      </div>
+      
+      
+      <!--
+        <img src="images/marker.png" ng-show="state" style="position: fixed; height: 41px; top: 100px; bottom: 100px; right: 0px; left: 0px; margin-right: auto; margin-left: auto; margin-top: auto; margin-bottom: auto; z-index:999;">
+      -->
+
+       </ion-content>
+
+</ion-view>

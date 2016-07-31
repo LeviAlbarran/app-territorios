@@ -23,6 +23,9 @@ app.factory('directionService', function($resource){
             });
 
         },
+
+
+
         unaDireccion: function (method, id){
             if(method=='get'){
                 array=true;
@@ -40,10 +43,32 @@ app.factory('directionService', function($resource){
 
             });
 
-        }
+        },
+
+        direccionesTerritorio: function (method, idTerritorio){
+            if(method=='get'){
+                array=true;
+            }else{
+                array=false;
+
+            }
+
+            return $resource(apiBase, {},{
+                ejecutar:{
+                    method: method,
+                    url: direc.direcciones+'?territorio='+ idTerritorio,
+                    isArray: array,
+                    header: {"Content-Type": "application/json"}
+
+
+                }    
+
+            });
+
+        },
+
+
+
     }
-
-
-
 
 });

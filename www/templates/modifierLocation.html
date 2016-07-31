@@ -14,14 +14,15 @@
     <form name="locationForm" ng-submit="submitModifierLocation()">
 
       <div class="list">
-       <label class="item item-input">
-                    <input type="number" ng-model="modifierLocation.id" placeholder="ID" ng-minlength="1" ng-maxlength="100" required>
-        </label>
-        <div class="row">
-            <div class="col">
-            <label class = "item item-input item-select">
+          <label class="item item-input">
                 <div class = "input-label">
-                    Nombre
+                  ID
+                </div>
+                <input type="number" ng-model="modifierLocation.id" placeholder="ID" ng-minlength="1" ng-maxlength="100" required>
+          </label>
+          <label class = "item item-input item-select">
+                <div class = "input-label">
+                    Genero
                 </div>
                 <select ng-model="modifierLocation.genero" >
                 <option style="display:none" value=""></option>
@@ -29,25 +30,25 @@
                     <option  value="Sra">Sra</option>
                     <option  value="Flia">Flia</option>
                </select>  
-            </label>
-            </div>
-            <div class="col ">
-                <label class="item item-input">
+          </label>
+         
+          <label class="item item-input">
+                <div class = "input-label">
+                    Nombre
+                </div>
                 <input type="text" ng-model="modifierLocation.nombre" placeholder="Nombre" ng-minlength="1" ng-maxlength="100" required>
-                  </label>    
-            </div>
-            
-        </div>    
-              <label class = "item item-input item-select">
+          </label>    
+               
+          <label class = "item item-input item-select">
                     <div class = "input-label">
                           Condicion
                     </div>
                     <select ng-model="modifierLocation.condicion" >
-                          <option style="display:none" value="">Seleccione condicion</option>
+                          <option style="display:none" value="">Seleccione</option>
                           <option  value="Nativo">Nativo</option>
                           <option  value="Decendiente">Decendiente</option>
                      </select>
-                </label>
+          </label>
 
           <label class="item item-input">
                     <input type="text" ng-model="modifierLocation.direccion" placeholder="direccion" ng-minlength="1" ng-maxlength="100" required>
@@ -57,7 +58,7 @@
                             Edificacion
                       </div>
                      <select ng-model="modifierLocation.edificacion" >
-                      <option style="display:none" value="">Seleccione edificacion</option>
+                      <option style="display:none" value="">Seleccione</option>
                       <option  value="Casa">Casa</option>
                       <option  value="Edificio">Edificio</option>
                       <option  value="Local">Local</option>
@@ -71,7 +72,7 @@
            </div>
           
            <select ng-model="modifierLocation.zona" ng-options="zona._id as zona.nombre for zona in zonas">
-                <option style="display:none" value="">Seleccione un zona</option>
+                <option style="display:none" value="">Seleccione</option>
            </select>
         </label>
         

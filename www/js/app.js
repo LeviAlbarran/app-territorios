@@ -82,7 +82,15 @@ var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova',
           }
         }
       })
-
+       .state('app.territoriosDirecciones', {
+        url:"/territoriosDirecciones/:idTerritorios",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/territoriosDirecciones.html",
+            controller:'territoriosDireccionesController'
+          }
+        }
+      })
 
       .state('app.zonas', {
         url:"/zonas",
