@@ -1,5 +1,5 @@
 
-<ion-view title="Direcciones">
+<ion-view title="Direcciones" cache-view="false">
 
   <ion-nav-buttons side="left">
     <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
@@ -7,14 +7,14 @@
   
 
   <ion-nav-buttons side="right">
-     <button  class="button button-icon icon ion-android-pin" ng-model="collapsed" ng-click="toggle()"></button>
+     <button  class="button button-icon icon ion-android-pin" ng-model="collapsed" ng-click="toggle()" ng-hide="auth.sistema.verificacion.crear"></button>
     <button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
   </ion-nav-buttons>
 
   
 
   <ion-header-bar class="bar-light bar-subheader">
-      <input type="search" placeholder="Buscar direccion..." ng-model="search" ng-keyup="count = count + 1" ng-init="count=0">
+      <input type="text" placeholder="Buscar direccion..." ng-model="search" ng-keyup="count = count + 1" ng-init="count=0">
     </ion-header-bar>
 
   
@@ -22,7 +22,7 @@
   <ion-content data-tap-disabled="true">
  	<ion-list style="position:absolute;" >
 
-        <ion-item nav-clear menu-close ng-click="goTo(locationKey)" ng-repeat="(locationKey,location) in locations | filter:search"  ng-show="count > 2" class="ng-hide" ng-hide="!search.length">
+        <ion-item nav-clear menu-close ng-click="goTo('{{location._id}}')" ng-repeat="(locationKey,location) in locations | filter:search"  ng-show="count > 2" class="ng-hide" ng-hide="!search.length">
           {{location.nombre}}
         </ion-item>
 

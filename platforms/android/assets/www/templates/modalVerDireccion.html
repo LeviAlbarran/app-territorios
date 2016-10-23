@@ -1,0 +1,38 @@
+<ion-modal-view>
+  <ion-header-bar >
+
+    <h1 class="title">{{direccionSeleccionada.id}} - {{direccionSeleccionada.genero}} {{direccionSeleccionada.nombre}}</h1>
+
+    <div class="buttons">
+      <button class="button button-clear" ng-click="modalVerDireccion.hide();">X</button>
+    </div>
+
+  </ion-header-bar>
+
+  <ion-content class="padding">
+
+   <div class="list card">
+<a class="item item-icon-left assertive" href="#">
+    <i class="icon ion-map"></i>
+    Direccion
+    <p><b>Zona: </b>{{direccionSeleccionada.zona}} - <b>Edificacion: </b>{{direccionSeleccionada.edificacion}}</p>
+    <p class="item-text-wrap">{{direccionSeleccionada.direccion}}</p>
+  </a>
+  
+  <div class="item item-image" style="height:380px">
+    <div id="mapDireccion" data-tap-disabled="true" style="height: 100%; width:100%"></div>
+  </div>
+<div class="item assertive">
+       
+    <p style="text-align:right;"> <b>{{direccionSeleccionada.condicion}}</b></p>
+    <p></p>
+       Comentarios  
+    <p class="item-text-wrap">{{direccionSeleccionada.comentarios}}</p>
+
+  </div>
+  
+  
+</div>
+  </ion-content>
+
+</ion-modal-view>

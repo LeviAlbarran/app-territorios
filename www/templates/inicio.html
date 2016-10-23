@@ -1,13 +1,17 @@
-<ion-view view-title="Login" name="login-view">
-  <ion-content class="padding">
-      <div class="list list-inset">
-          <label class="item item-input">
-              <input type="text" placeholder="Username" ng-model="data.username">
-          </label>
-          <label class="item item-input">
-              <input type="password" placeholder="Password" ng-model="data.password">
-          </label>
-      </div>
-      <button class="button button-block button-calm" ng-click="login()">Login</button>
-  </ion-content>
-</ion-view>
+<ion-content scroll="false">
+	<form ng-submit="login.login()" method="post">  
+	<div class="list list-inset">
+			 <label class="item item-input">
+		    	<input type="email" ng-model="login.correo" placeholder="Email"/>
+		  	</label>
+		  	<label class="item item-input">
+		  		<input type="password" ng-model="login.clave" placeholder="Password"/>
+		  	</label>
+		    <button type="submit" class="button button-block button-positive">Autenticarse</button>
+		    <span ng-show="responseLogin" style="color:red">{{responseLogin}}</span>
+	</div>
+	</form>
+<!--	<a ui-sref="registrarse" style="color:red; float: right">Registrarse</a>-->
+	<a ng-href = '#/registrarse' style="color:red; float: right">Registrarse</a>
+
+</ion-content>

@@ -1,10 +1,10 @@
-angular.module('starter').factory('InstructionsService', [ function() {
+app.factory('InstructionsService', [ function() {
 
   var instructionsObj = {};
 
   instructionsObj.instructions = {
     newLocations : {
-      text : 'To add a new location, tap and hold on the map',
+      text : 'Dejar presionado para agregar una direccion',
       seen : false
     }
   };

@@ -1,17 +1,48 @@
-<ion-view title="Map">
+
+<ion-view title="Direcciones">
 
   <ion-nav-buttons side="left">
     <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
+  
 
   <ion-nav-buttons side="right">
+     <button  class="button button-icon icon ion-android-pin" ng-model="collapsed" ng-click="toggle()"></button>
     <button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
   </ion-nav-buttons>
 
+  
+
+  <ion-header-bar class="bar-light bar-subheader">
+      <input type="text" placeholder="Buscar direccion..." ng-model="search" ng-keyup="count = count + 1" ng-init="count=0">
+    </ion-header-bar>
+
+  
+
   <ion-content data-tap-disabled="true">
+ 	<ion-list style="position:absolute;" >
 
-    <leaflet defaults="map.defaults" center="map.center" markers="map.markers" ng-if="map"></leaflet>
+        <ion-item nav-clear menu-close ng-click="goTo('{{location._id}}')" ng-repeat="(locationKey,location) in locations | filter:search"  ng-show="count > 2" class="ng-hide" ng-hide="!search.length">
+          {{location.nombre}}
+        </ion-item>
 
-  </ion-content>
+      </ion-list>
+      <div id="containerMap"  style="height: 100%; width:100%"> 
+        <div id="map" data-tap-disabled="true" style="height: 100%; width:100%"></div>
+      </div>
+      
+          <ion-toggle ng-model="toggleMostrarDirecciones.checked" ng-change="toggleMostrarDirecciones()" style="display:none; position: fixed; top: 110px; z-index:999; right: 5px;">
+              Direcciones
+          </ion-toggle>
+      
+      <button class="button button-block button-balanced" ng-show="state"  style="bottom: 5px; position: fixed;  right: 0px; left: 0px; margin: auto;" ng-click="marcarAqui()">
+           Marcar Aqui
+      </button>
+      <!--
+        <img src="images/marker.png" ng-show="state" style="position: fixed; height: 41px; top: 100px; bottom: 100px; right: 0px; left: 0px; margin-right: auto; margin-left: auto; margin-top: auto; margin-bottom: auto; z-index:999;">
+      -->
+       <img src="images/marker.png" ng-show="state" style="position: fixed; height: 41px; top: 50%; margin-top: 20px; z-index: 999; width: auto; left: 50%; margin-left: -13px;">
+
+       </ion-content>
 
 </ion-view>

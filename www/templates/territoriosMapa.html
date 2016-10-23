@@ -1,0 +1,84 @@
+<style type="text/css">
+#seleccionable {
+    top: 108px;
+    position: fixed;
+    height: 400px;
+    width: 700px;
+    -webkit-box-shadow: 0px 2px 0px 9000px rgba(0,0,0,0.75);
+}
+
+
+.item {
+/*    border-color: #ef473a !important;*/
+
+}
+  .toggleGPS {
+    background-color: #ef473a !important;
+    color: #FFF !important;    
+    border-color: #ef473a !!important;
+    padding: 7px !important;
+    font-size: 13px !important;
+}
+.item-toggle .toggle {
+    top: 2px !important;
+  
+}
+.item-toggle, .item-toggle.item-complex .item-content {
+    padding-right: 81px !important;
+}
+</style>
+<ion-view title="Direcciones" cache-view="false">
+
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  
+
+  <ion-nav-buttons side="right">
+    <button ng-click="locate();" class="button button-icon icon ion-pinpoint"></button>
+  </ion-nav-buttons>
+
+  
+
+  <ion-header-bar class="bar-light bar-subheader">
+      <input type="search" placeholder="Buscar direccion..." ng-model="search" ng-keyup="count = count + 1" ng-init="count=0">
+    </ion-header-bar>
+
+  
+
+  <ion-content data-tap-disabled="true">
+ 	<ion-list style="position:absolute;" >
+
+        <ion-item nav-clear menu-close ng-click="goTo(locationKey)" ng-repeat="(locationKey,location) in locations | filter:search"  ng-show="count > 2" class="ng-hide" ng-hide="!search.length">
+          {{location.nombre}}
+        </ion-item>
+
+      </ion-list>
+
+      <div id="containerMapAll"  style="height: 100%; width:100%"> 
+        <div id="mapTodasDirecciones" data-tap-disabled="true" style="height: 100%; width:100%"></div>
+      </div>
+      
+      
+      <!--
+        <img src="images/marker.png" ng-show="state" style="position: fixed; height: 41px; top: 100px; bottom: 100px; right: 0px; left: 0px; margin-right: auto; margin-left: auto; margin-top: auto; margin-bottom: auto; z-index:999;">
+      -->
+      
+
+       </ion-content>
+       <div id="seleccionable" ng-show="showDiv"> </div>
+       <ion-footer-bar align-title="left" class="bar-assertive">
+          <div class="buttons">
+            <button class="button" ng-click="showDiv = !showDiv" >Seleccionar Area</button>
+            <button class="button" ng-click="imprimir()" >Imprimir</button> 
+          </div>
+          <h1 class="title"></h1>
+          <div class="buttons" >
+            <ion-toggle class="toggleGPS" ng-model="toggleGPS.checked" ng-change="toggleGPS()" >
+                      GPS Guiado
+            </ion-toggle>
+          </div>
+        </ion-footer-bar>
+
+
+</ion-view>

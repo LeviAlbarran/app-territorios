@@ -1,0 +1,20 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-calm">
+
+    <h1 class="title">Asignar Territorios</h1>
+
+    <div class="buttons">
+      <button class="button button-clear" ng-click="modalAsignarTerritorios.hide()">X</button>
+    </div>
+
+  </ion-header-bar>
+
+  <ion-content class="padding">
+
+<ion-list>
+
+  <ion-checkbox ng-repeat="territorio in territorios track by territorio._id" ng-model="territorio.permiso" ng-checked="territorio.permiso" ng-change="checkboxChangeTerritorio('{{territorio._id}}', {{territorio.permiso}})" > {{territorio.nombre}}</ion-checkbox>
+  
+</ion-list>
+</ion-content>
+</ion-modal-view>

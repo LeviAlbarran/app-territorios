@@ -1,0 +1,35 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-calm">
+
+    <h1 class="title">Cambiar de Territorio</h1>
+
+    <div class="buttons">
+      <button class="button button-clear" ng-click="modalCambiarTerritorio.hide()">X</button>
+    </div>
+
+  </ion-header-bar>
+
+  <ion-header-bar class="bar-light bar-subheader">
+         <select ng-model="optionTerritorio" ng-options="territorio._id as territorio.nombre for territorio in territorios" style="width: 100%;">
+                <option style="display:none" value="">Seleccione</option>
+           </select>
+    	Direcciones que cambiaras
+    </ion-header-bar>
+  <ion-content class="padding">
+ 
+	<ion-list>
+	     <ion-item nav-clear menu-close ng-repeat="markerChange in markersChange " >
+          {{markerChange.id}} - {{markerChange.nombre}}
+        </ion-item>
+<!--
+  		<ion-checkbox ng-repeat="territorio in territorios track by territorio._id" ng-model="territorio.permiso" ng-checked="territorio.permiso" ng-change="checkboxChangeTerritorio('{{territorio._id}}', {{territorio.permiso}})" > {{territorio.nombre}}</ion-checkbox>
+	</ion-list>-->
+</ion-content>
+		
+       <ion-footer-bar align-title="left" >
+           <div class="buttons">
+		  	<a class="button button-block button-assertive" ng-click="saveChangeTerritorio(optionTerritorio)" ng-hide="auth.zonas.eliminar==false"> Guardar Cambios</a>
+		  	</div>
+		</ion-footer-bar>
+
+</ion-modal-view>

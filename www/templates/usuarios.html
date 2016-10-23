@@ -1,0 +1,16 @@
+<ion-view view-title="Usuarios" cache-view="false">
+<style type="text/css">
+	.colorDesactive{
+		color: red;
+	}
+</style>
+  <ion-content>
+	<ion-list>
+
+        <ion-item nav-clear menu-close ng-repeat="usuario in usuarios track by usuario._id" href="#/app/usuarios/{{usuario._id}}" >
+          {{usuario.nombre}}
+        </ion-item>
+
+	</ion-list>
+	</ion-content>
+</ion-view>

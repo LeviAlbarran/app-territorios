@@ -1,10 +1,10 @@
 <ion-modal-view>
   <ion-header-bar class="bar-calm">
 
-    <h1 class="title">New Location</h1>
+    <h1 class="title">Nueva Dirección</h1>
 
     <div class="buttons">
-      <button class="button button-clear" ng-click="modal.hide()">Cancel</button>
+      <button class="button button-clear" ng-click="modal.hide()">X</button>
     </div>
 
   </ion-header-bar>
@@ -14,11 +14,74 @@
     <form name="locationForm" ng-submit="saveLocation()">
 
       <div class="list">
-
-        <label class="item item-input">
-          <span class="input-label">Name</span>
-          <input type="text" ng-model="newLocation.name" placeholder="What's Here?" ng-minlength="1" ng-maxlength="100" required>
+       <label class="item item-input">
+                <div class = "input-label">
+                  ID
+                </div>
+                    <input type="number" ng-model="newLocation.id" placeholder="ID" ng-minlength="1" ng-maxlength="100" required>
         </label>
+        <label class = "item item-input item-select">
+                <div class = "input-label">
+                    Genero
+                </div>
+                <select ng-model="newLocation.genero" >
+                <option style="display:none" value="">Seleccione</option>
+                    <option  value="Sr"  ng-selected="selected">Sr</option>
+                    <option  value="Sra">Sra</option>
+                    <option  value="Flia">Flia</option>
+               </select>  
+            </label>
+
+       
+            <label class="item item-input">
+                <input type="text" ng-model="newLocation.nombre" placeholder="Nombre" ng-minlength="1" ng-maxlength="100" required>
+            </label>    
+             
+              <label class = "item item-input item-select">
+                    <div class = "input-label">
+                          Condicion
+                    </div>
+                    <select ng-model="newLocation.condicion" >
+                          <option style="display:none" value="">Seleccione</option>
+                          <option  value="Nativo">Nativo</option>
+                          <option  value="Decendiente">Decendiente</option>
+                     </select>
+                </label>
+
+          <label class="item item-input">
+                    <input type="text" ng-model="newLocation.direccion" placeholder="direccion" ng-minlength="1" ng-maxlength="100" required>
+        </label>
+        <label class = "item item-input item-select">
+                      <div class = "input-label">
+                            Edificacion
+                      </div>
+                     <select ng-model="newLocation.edificacion" >
+                      <option style="display:none" value="">Seleccione</option>
+                      <option  value="Casa">Casa</option>
+                      <option  value="Edificio">Edificio</option>
+                      <option  value="Local">Local</option>
+                      <option  value="Otro">Otro</option>
+                 </select>  
+               </label>
+
+         <label class = "item item-input item-select">
+           <div class = "input-label">
+              Zona
+           </div>
+          
+           <select ng-model="newLocation.zona" ng-options="zona._id as zona.nombre for zona in zonas">
+                <option style="display:none" value="">Seleccione</option>
+           </select>
+        </label>
+        
+        
+        <label class="item item-input">
+                    <input type="text" ng-model="newLocation.comentarios" placeholder="comentarios" ng-minlength="1" ng-maxlength="100" required>
+        </label>
+                 
+       
+       
+        
 
         <div class="item tabs tabs-secondary tabs-icon-left">
           <a class="tab-item" href="#">
@@ -33,7 +96,7 @@
 
       <div class="padding">
 
-        <button class="button button-block button-balanced" ng-disabled="locationForm.$invalid">Save Location</button>
+        <button class="button button-block button-balanced" ng-disabled="locationForm.$invalid">Guardar</button>
 
       </div>
 

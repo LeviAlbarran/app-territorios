@@ -3,9 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncate'])
+var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova', 'igTruncate',  'ngCordovaOauth']);
 
-  .run(function($ionicPlatform) {
+  app.run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -16,28 +16,123 @@ angular.module('starter', ['ionic', 'leaflet-directive', 'ngCordova', 'igTruncat
       if(window.StatusBar) {
         StatusBar.styleDefault();
       }
+
+
     });
   })
 
-  .config(function($stateProvider, $urlRouterProvider) {
+
+
+  app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
     $stateProvider
+
+
+      .state('inicio', {
+        url: "/inicio",
+   
+        templateUrl: "templates/inicio.html",
+        controller: 'inicioController',
+        cache: false
+        
+
+      })
 
       .state('app', {
         url: "/app",
         abstract: true,
-        templateUrl: "templates/menu.html",
-        controller: 'MapController'
+        templateUrl: "templates/menu.html"
       })
+
+
 
       .state('app.map', {
         url: "/map",
         views: {
           'menuContent' :{
-            templateUrl: "templates/map.html"
+            templateUrl: "templates/map.html", 
+            controller: 'MapController'
+          },
+          cache: false
+        }
+      })
+
+      .state('app.territorios', {
+        url:"/territorios",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/territorios.html",
+            controller:'territoriosController',
+          },
+          cache: false
+        }
+      })
+
+      .state('app.territoriosDetalles', {
+        url:"/territorios/:idTerritorios",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/territoriosDetalles.html",
+           controller:'territoriosDetallesController'
+          },
+          cache: false
+        }
+      })
+
+       .state('app.nuevoTerritorio', {
+        url:"/nuevoTerritorio",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/nuevoTerritorio.html",
+            controller:'nuevoTerritorioController'
+          }
+        }
+      })
+       .state('app.territoriosDirecciones', {
+        url:"/territoriosDirecciones/:idTerritorios",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/territoriosDirecciones.html",
+            controller:'territoriosDireccionesController'
+          },
+          cache: false
+        }
+      })
+
+      .state('app.zonas', {
+        url:"/zonas",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/zonas.html",
+            controller:'zonasController'
+          }
+        },
+        cache: false
+      })
+
+      .state('app.zonasDetalles', {
+        url:"/zonas/:idZona",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/zonasDetalles.html",
+           controller:'zonasDetallesController'
           }
         }
       })
 
-    $urlRouterProvider.otherwise('/app/map');
+       .state('app.nuevaZona', {
+        url:"/nuevaZona",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/nuevaZona.html",
+            controller:'nuevaZonaController'
+          }
+        }
+      })
+
+
+
+    $urlRouterProvider.otherwise('/inicio');
 
   });

@@ -1,0 +1,33 @@
+<ion-view view-title="Territorios">
+  <ion-content>
+   <form >
+        <div class="list">
+ <div class="details" style="margin:8px; text-align: center;">
+            <h3>{{territorio.nombre}}</h3>
+            <br/>
+ 		<hr>
+        <div class="card">
+            <div class="item item-divider">
+                ID
+            </div>
+            <div class="item item-text-wrap">
+                <input type="text" ng-model="territorio.id" id="territorio.id" value="{{territorio.id}}" placeholder="{{territorio.id}}">
+            </div>
+            <div class="item item-divider">
+                Nombre
+            </div>
+            <div class="item item-text-wrap">
+                  <input type="text" ng-model="territorio.nombre" id="territorio.nombre" value="{{territorio.nombre}}" placeholder="{{territorio.nombre}}">
+            </div> 
+			 <div class="item item-divider">
+                    <a class="button button-block button-assertive" ng-click="eliminarTerritorio()"> Eliminar</a>
+                    <a class="button button-block button-positive" href="#/app/territoriosDirecciones/{{territorio._id}}"> Ir Direcciones</a>
+                    <a class="button button-block button-positive" ng-click="buttonAsignarDirecciones()">Asignar Direcciones</a>
+
+			  		<a class="button button-block button-positive" ng-click="modificarTerritorio()"> Guardar Cambios</a>
+			 </div> 
+			
+                </form> 
+        </div>
+  </ion-content>
+</ion-view>

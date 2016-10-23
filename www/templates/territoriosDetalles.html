@@ -1,4 +1,4 @@
-<ion-view view-title="Territorios">
+<ion-view view-title="Territorios" cache-view="false">
   <ion-content>
    <form >
         <div class="list">
@@ -20,12 +20,28 @@
                   <input type="text" ng-model="territorio.nombre" id="territorio.nombre" value="{{territorio.nombre}}" placeholder="{{territorio.nombre}}">
             </div> 
 			 <div class="item item-divider">
-                    <a class="button button-block button-assertive" ng-click="eliminarTerritorio()"> Eliminar</a>
-                    <a class="button button-block button-positive" href="#/app/territoriosDirecciones/{{territorio._id}}"> Ir Direcciones</a>
-			  		<a class="button button-block button-positive" ng-click="modificarTerritorio()"> Guardar Cambios</a>
+                    <a class="button button-block button-assertive" ng-click="eliminarTerritorio()" ng-hide="auth.territorio.eliminar==false"> Eliminar</a>
+                    <a class="button button-block button-positive" href="#/app/territoriosDirecciones/{{territorio._id}}" > Ir Direcciones</a>
+                    <a class="button button-block button-positive" ng-click="buttonAsignarDirecciones()" ng-hide="auth.territorio.asignar==false">Asignar Direcciones</a>
+
+			  		<a class="button button-block button-positive" ng-click="modificarTerritorio()" ng-hide="auth.territorio.modificar==false"> Guardar Cambios</a>
+
+                    <a class="button button-block button-positive" ng-click="imprimirDirecciones()" > Imprimir Direcciones</a>
 			 </div> 
 			
                 </form> 
         </div>
+        <script id="pdf-viewer.html" type="text/ng-template">  
+            <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title"></h1> 
+                <button ng-click="descargarPdf()" class="button button-icon icon ion-ios-cloud-download-outline"> Descargar</button>
+                <button ng-click="modalpdf.hide()" class="button button-icon icon ion-android-close"></button>
+            </ion-header-bar>
+            <ion-content>
+                <ng-pdf ng-if="pdfUrl" template-url="templates/viewer.html" canvasid="pdf" scale="page-fit"></ng-pdf>  
+            </ion-content>
+            </ion-modal-view>
+        </script>  
   </ion-content>
 </ion-view>

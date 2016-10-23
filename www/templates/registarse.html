@@ -1,0 +1,51 @@
+<ion-content scroll="false">
+    <form name="registroForm" method="post" ng-submit="signup.signup()">
+      <ion-list>
+         <label class="item item-input">
+                <div class = "input-label">
+                  Nombre Completo
+                </div>
+                <input type="text" ng-model="signup.nombre" placeholder="Nombre Completo" required>
+          </label>
+          <label class="item item-input">
+                <div class = "input-label">
+                  Email
+                </div>
+                <input type="email" ng-model="signup.correo" placeholder="Email" required>
+          </label>
+          <label class="item item-input">
+                <div class = "input-label">
+                  Contraseña
+                </div>
+                <input type="password" ng-model="signup.clave" placeholder="Contraseña" required>
+          </label>
+          <label class="item item-input" ng-show="signup.clave">
+                <div class = "input-label">
+                  Repetir Contraseña
+                </div>
+                <input type="password" ng-model="signup.clave2" placeholder="Repetir Contraseña" required>
+                <span ng-hide="signup.clave == signup.clave2">Su contraseña debe coincidir</span>
+          </label>
+           <span ng-show="responseRegistrarse" style="color:red">{{responseRegistrarse}}</span>
+                  <label class = "item item-input item-select">
+                <div class = "input-label">
+                    Congregacion
+                </div>
+                <select ng-model="signup.congregacion" >
+                <option style="display:none" value="">Seleccione</option>
+                    <option  value="1"  ng-selected="selected">Italiano Maracaibo</option>
+                    <option  value="2">Español Aruba</option>
+               </select>  
+            </label>
+
+      </ion-list>
+      
+      <div class="padding">
+
+        <button class="button button-block button-balanced" ng-disabled="registroForm.$invalid">Guardar</button>
+
+      </div>
+
+    </form>
+
+  </ion-content>

@@ -1,0 +1,114 @@
+<ion-view view-title="Usuarios" cache-view="false">
+  <ion-content>
+  <style type="text/css">
+.item.item-toggle.toggle-large{
+    text-align: left;
+}
+  </style>
+   <form >
+        <div class="list">
+ <div class="details" style="margin:8px; text-align: center;">
+            <h3>{{usuario.nombre}}</h3>
+            <br/>
+    <hr>
+        <div class="card">
+            
+            <ion-toggle ng-model="usuario.activacion"  ng-checked="usuario.activacion" >
+              Activacion
+            </ion-toggle>
+            <div class="item item-divider">
+                <b>Nombre</b>
+            </div>
+            <div class="item item-text-wrap">
+                  <input type="text" ng-model="usuario.nombre" id="usuario.nombre" value="{{usuario.nombre}}" placeholder="{{usuario.nombre}}">
+            </div>
+             <div class="item item-divider">
+                <b>Correo</b>
+            </div>
+            <div class="item item-text-wrap">
+                  <input type="email" ng-model="usuario.correo" id="usuario.correo" value="{{usuario.correo}}" placeholder="{{usuario.correo}}">
+            </div>
+             <div class="item item-divider">
+                <b>Contraseña</b>
+            </div>
+            <div class="item item-text-wrap">
+                  <input type="password" ng-model="usuario.clave" id="usuario.clave" value="{{usuario.clave}}" placeholder="{{usuario.clave}}">
+            </div>
+            <div class="item item-text-wrap">
+              <label class = "item item-input item-select">
+                .
+                <select ng-model="usuario.nivel" ng-options="nivel.id as nivel.nombre for nivel in niveles">
+                  <option style="display:none" value="">Seleccione un territorio</option>
+                </select>
+              </label>
+            </div>
+        </div>
+        <div class="card">
+            <div class="item item-divider">
+                <b>Permisos</b>
+            </div>
+
+            <div class="item item-divider">
+                Verificacion
+            </div>
+            <ion-toggle ng-model="usuario.permisos.sistema.verificacion.visualizar"  ng-checked="usuario.permisos.sistema.verificacion.visualizar" >
+              Visualizar
+            </ion-toggle>
+            <ion-toggle ng-model="usuario.permisos.sistema.verificacion.crear" ng-checked="usuario.permisos.sistema.verificacion.crear" >
+              Crear
+            </ion-toggle>
+            <ion-toggle ng-model="usuario.permisos.sistema.verificacion.modificar" ng-checked="usuario.permisos.sistema.verificacion.modificar" >
+              Modificar
+            </ion-toggle>
+            <ion-toggle ng-model="usuario.permisos.sistema.verificacion.eliminar" ng-checked="usuario.permisos.sistema.verificacion.eliminar" >
+              Eliminar
+            </ion-toggle>
+            <div class="item item-divider">
+              Territorios
+            </div>
+            <ion-toggle ng-model="usuario.permisos.sistema.territorio.crear" ng-checked="usuario.permisos.sistema.territorio.crear" >
+              Crear
+            </ion-toggle>
+            <ion-toggle ng-model="usuario.permisos.sistema.territorio.modificar" ng-checked="usuario.permisos.sistema.territorio.modificar" >
+              Modificar
+            </ion-toggle>
+            <ion-toggle ng-model="usuario.permisos.sistema.territorio.eliminar" ng-checked="usuario.permisos.sistema.territorio.eliminar" >
+              Eliminar
+            </ion-toggle>
+            <ion-toggle ng-model="usuario.permisos.sistema.territorio.asignar" ng-checked="usuario.permisos.sistema.territorio.asignar">
+             Asignar
+            </ion-toggle>
+            <div class="item item-divider">
+              Zonas
+            </div>
+            <ion-toggle ng-model="usuario.permisos.sistema.zonas.crear" ng-checked="usuario.permisos.sistema.zonas.crear" >
+              Crear
+            </ion-toggle>
+            <ion-toggle ng-model="usuario.permisos.sistema.zonas.modificar" ng-checked="usuario.permisos.sistema.zonas.modificar" >
+              Modificar
+            </ion-toggle>
+            <ion-toggle ng-model="usuario.permisos.sistema.zonas.eliminar" ng-checked="usuario.permisos.sistema.zonas.eliminar" >
+              Eliminar
+            </ion-toggle>
+            <div class="item item-divider">
+              Direcciones
+            </div>
+            <ion-toggle ng-model="usuario.permisos.sistema.direcciones.crear" ng-checked="usuario.permisos.sistema.direcciones.crear" >
+              Crear
+            </ion-toggle>
+            <ion-toggle ng-model="usuario.permisos.sistema.direcciones.modificar" ng-checked="usuario.permisos.sistema.direcciones.modificar" >
+              Modificar
+            </ion-toggle>
+            <ion-toggle ng-model="usuario.permisos.sistema.direcciones.eliminar" ng-checked="usuario.permisos.sistema.direcciones.eliminar" >
+              Eliminar
+            </ion-toggle>
+       <div class="item item-divider">
+            <a class="button button-block button-assertive" ng-click="eliminarUsuario()"> Eliminar</a>
+            <a class="button button-block button-positive" ng-click="buttonAsignarTerritorios()"> Asignar Territorios</a>
+            <a class="button button-block button-positive" ng-click="modificarUsuario()"> Guardar Cambios</a>
+       </div> 
+      
+                </form> 
+        </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,13 @@
+<ion-view view-title="Direcciones" cache-view="false">
+  <ion-content>
+	<ion-list>
+	 <ion-list>
+	        <ion-item nav-clear class="item item-icon-right" menu-close ng-repeat="direcciones in direcciones  | orderBy:'nombre':false " >
+	        {{direcciones.id}}- {{direcciones.nombre}}    
+	         <p>{{direcciones.nombreTerritorio}}</p>
+	         <i ng-click="buttonVerDireccion('{{direcciones._id}}');" class="icon ion-eye"></i>
+	        </ion-item>
+	      </ion-list>
+	</ion-list>
+  </ion-content>
+</ion-view>

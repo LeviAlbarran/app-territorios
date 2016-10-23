@@ -1,0 +1,36 @@
+<ion-view view-title="Mi Perfil" cache-view="false">
+  <ion-content>
+  <style type="text/css">
+.item.item-toggle.toggle-large{
+    text-align: left;
+}
+  </style>
+   <form >
+        <div class="list">
+ <div class="details" style="margin:8px; text-align: center;">
+            <h3>{{usuario.nombre}}</h3>
+            <br/>
+    <hr>
+        <div class="card">
+         
+            <div class="item item-divider">
+                <b>Nombre</b>
+            </div>
+            <div class="item item-text-wrap">
+                  <input type="text" ng-model="usuario.nombre" id="usuario.nombre" value="{{usuario.nombre}}" placeholder="{{usuario.nombre}}">
+            </div>
+            <div class="item item-text-wrap">
+                  <input type="email" ng-model="usuario.correo" id="usuario.correo" value="{{usuario.correo}}" placeholder="{{usuario.correo}}">
+            </div>
+            <div class="item item-text-wrap">
+                  <input type="password" ng-model="usuario.clave" id="usuario.clave" value="{{usuario.clave}}" placeholder="{{usuario.clave}}">
+            </div>
+        </div>
+       <div class="item item-divider">
+            <a class="button button-block button-positive" ng-click="modificarUsuario()"> Guardar Cambios</a>
+       </div> 
+      
+                </form> 
+        </div>
+  </ion-content>
+</ion-view>

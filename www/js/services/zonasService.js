@@ -1,4 +1,4 @@
-app.factory('zonasService',function($resource){
+app.factory('zonasService', function ($resource){
 	
 return{
 		     

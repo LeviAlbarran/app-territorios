@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova', 'igTruncate']);
+var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova', 'igTruncate','satellizer', 'base64', 'pdf']);
 
   app.run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -23,32 +23,55 @@ var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova',
 
 
 
-  app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
-    $httpProvider.defaults.useXDomain = true;
-    delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    $stateProvider
+  app.config(function($stateProvider, $urlRouterProvider, $httpProvider, $authProvider) {
 
+
+        $authProvider.loginUrl = "http://node-territorios.herokuapp.com/auth/login";
+        $authProvider.signupUrl = "http://node-territorios.herokuapp.com/auth/signup";
+
+        //$authProvider.loginUrl = "http://"+ server +":5000/auth/login";
+        //$authProvider.signupUrl = "http://"+ server +":5000/auth/signup";
+        $authProvider.tokenName = "token";
+        $authProvider.tokenPrefix = "app";
+
+  //  $httpProvider.defaults.useXDomain = true;
+    //delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    $stateProvider
 
       .state('inicio', {
         url: "/inicio",
-        abstract: true,
         templateUrl: "templates/inicio.html",
-        controller: 'inicioController'
+        controller: "LoginController",
+        controllerAs: "login",
+        cache: false
+      })
+
+      .state('registrarse', {
+        url: "/registrarse",
+        templateUrl: "templates/registarse.html",
+        controller: "SignupController",
+        controllerAs: "signup",
+        cache: false
       })
 
       .state('app', {
         url: "/app",
         abstract: true,
         templateUrl: "templates/menu.html",
-        controller: 'MapController'
+        controller: "LogoutController",
+        controllerAs: "logOut",
+         cache: false
+
       })
 
       .state('app.map', {
         url: "/map",
         views: {
           'menuContent' :{
-            templateUrl: "templates/map.html"
-          }
+            templateUrl: "templates/map.html", 
+            controller: 'MapController'
+          },
+          cache: false
         }
       })
 
@@ -69,7 +92,8 @@ var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova',
           'menuContent' :{
             templateUrl: "templates/territoriosDetalles.html",
            controller:'territoriosDetallesController'
-          }
+          },
+          cache: false
         }
       })
 
@@ -88,9 +112,22 @@ var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova',
           'menuContent' :{
             templateUrl: "templates/territoriosDirecciones.html",
             controller:'territoriosDireccionesController'
-          }
+          },
+          cache: false
         }
       })
+
+       .state('app.territoriosMapa', {
+        url:"/territoriosMapa",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/territoriosMapa.html",
+            controller:'territoriosMapaController'
+          },
+          cache: false
+        }
+      })
+
 
       .state('app.zonas', {
         url:"/zonas",
@@ -120,11 +157,66 @@ var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova',
             templateUrl: "templates/nuevaZona.html",
             controller:'nuevaZonaController'
           }
-        }
+        },
+         cache: false
       })
 
+      .state('app.usuarios', {
+        url:"/usuarios",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/usuarios.html",
+            controller:'usuariosController'
+          }
+        },
+        cache: false
+      })
 
+      .state('app.usuariosDetalles', {
+        url:"/usuarios/:idUsuario",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/usuariosDetalles.html",
+           controller:'usuariosDetallesController'
+          }
+        },
+        cache: false
+     
+      })
 
-    $urlRouterProvider.otherwise('/app/map');
+    .state('app.direcciones', {
+        url:"/direcciones",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/todasDirecciones.html",
+           controller:'direccionesController'
+          }
+        },
+        cache: false
+      })
+
+.state('app.direccionesDetalles', {
+        url:"/direcciones/:idDireccion",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/todasDireccionesDetalles.html",
+           controller:'direccionesDetallesController'
+          }
+        },
+        cache: false
+      })
+
+.state('app.perfil', {
+        url:"/perfil",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/miPerfil.html",
+           controller:'miPerfilController'
+          }
+        },
+        cache: false
+      })
+
+    $urlRouterProvider.otherwise('/inicio');
 
   });

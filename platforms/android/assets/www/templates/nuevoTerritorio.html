@@ -1,0 +1,22 @@
+<ion-view view-title="Nuevo territorio">
+  <ion-content>
+   <form name="locationForm" ng-submit="guardarTerritorio()">
+        <div class="list">
+ <div class="details" style="margin:8px; text-align: center;">
+            
+        <div class="card">
+            
+            <div class="item item-divider">
+                Nombre
+            </div>
+            <div class="item item-text-wrap">
+                  <input type="text" ng-model="newTerritorio.nombre" placeholder="Nombre" ng-minlength="1" ng-maxlength="100" required>
+            </div> 
+			 <div class="item item-divider">
+			  		<button class="button button-block button-positive" ng-disabled="locationForm.$invalid"> Guardar Territorio</button>
+			 </div> 
+			
+                </form> 
+        </div>
+  </ion-content>
+</ion-view>

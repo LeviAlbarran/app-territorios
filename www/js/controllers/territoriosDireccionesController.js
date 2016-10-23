@@ -38,7 +38,14 @@ app.controller('territoriosDireccionesController',
   $scope.locationsObj.savedLocations = [];
   
 
-
+$scope.imprimir = function(){
+  var content = window.document.getElementById("containerMap"); // get you map details
+var newWindow = window.open(); // open a new window
+newWindow.document.write(content.innerHTML); // write the map into the new window
+newWindow.document.getElementById("mapDirecciones").style.height = "400px";
+newWindow.document.getElementById("mapDirecciones").style.width = "700px";
+newWindow.print(); 
+}
 
     
   //      var myLatlng = new google.maps.LatLng(10.5732857, -71.6487104);
@@ -68,17 +75,55 @@ app.controller('territoriosDireccionesController',
 
         };
  
- 
+
 
      //  $scope.verDireciones();
      //  $scope.locate(); 
 
+       var directionsDisplay = new google.maps.DirectionsRenderer;
+       var directionsService = new google.maps.DirectionsService;
     
+
 
 angular.element(document).ready(function () {
       console.log("sad");
+
+      
+
       $scope.map = new google.maps.Map(document.getElementById('mapDirecciones'), mapOptions);
-    
+      directionsDisplay.setMap($scope.map);
+ 
+/*
+  var sydneyLoc = new google.maps.LatLng(10.5732857, -71.6487104); 
+var drawingManager = new google.maps.drawing.DrawingManager({
+      drawingMode: google.maps.drawing.OverlayType.POLYGON,
+    drawingControl: true,
+    drawingControlOptions: {
+      position: google.maps.ControlPosition.TOP_CENTER,
+      drawingModes: [
+        //google.maps.drawing.OverlayType.MARKER,
+        //google.maps.drawing.OverlayType.CIRCLE,
+        google.maps.drawing.OverlayType.POLYGON,
+        //google.maps.drawing.OverlayType.POLYLINE,
+        //google.maps.drawing.OverlayType.RECTANGLE
+      ]
+    }
+  });
+
+  drawingManager.setMap($scope.map);
+
+
+  google.maps.event.addListener(drawingManager, 'polygoncomplete', function (polygon) {
+
+    for (var i = 1; i < $scope.marker.length; i++) {
+      if(google.maps.geometry.poly.containsLocation($scope.marker[i].getPosition(), polygon) == true) {
+          console.log('is located inside your polygon');
+       }
+    };
+  });
+*/
+
+
 
   // al dejar por un tiempo pulsado en el mapa se crea la direccion nueva direccion   
 /*
@@ -96,14 +141,11 @@ angular.element(document).ready(function () {
 
           });
   */ 
-
+  $scope.locate();
   $scope.verDireciones();
-
 
  });
 
-
- $scope.marker = [];
 
 
 
@@ -204,7 +246,7 @@ infowindow = new google.maps.InfoWindow({
             });
 
 
-      
+      $scope.marker = [];
       var j = 0;
       $scope.marcarDirecciones = function(locationKey) {
         
@@ -262,10 +304,11 @@ var image = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F20
              $scope.show(location, j);
           });
 
+
+          //findNearestPlace(latitud, longitud);
         }
        
 
-  
 
 
           $scope.show = function(location, j) {
@@ -358,14 +401,19 @@ var image = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F20
 
        };
 
+      var myPosition;
+      $scope.markerMyPosition;
 
       $scope.locate = function(){
-
+        $scope.markerMyPosition;
+        if ($scope.markerMyPosition) {
+          $scope.markerMyPosition.setMap(null);
+        };
         $cordovaGeolocation
           .getCurrentPosition()
           .then(function (position) {
 
-            var myPosition = {lat: position.coords.latitude, lng: position.coords.longitude};
+             myPosition = {lat: position.coords.latitude, lng: position.coords.longitude};
             console.log(myPosition);
             $scope.markerMyPosition = new google.maps.Marker({
                 position: myPosition,
@@ -381,7 +429,69 @@ var image = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F20
             console.log("Localizacion error!");
             console.log(err);
           });
-
+         
       };
-   
+
+
+function rad(x) {return x*Math.PI/180;}
+
+ function find_closest_marker () {
+  $scope.locate();
+  console.log('aqui');
+    var lat = myPosition.lat;
+    var lng = myPosition.lng;
+    var R = 6371; // radius of earth in km
+    var distances = [];
+    var closest = -1;
+    for( i=0;i<$scope.locationsObj.savedLocations.length; i++ ) {
+      var location = $scope.locationsObj.savedLocations[i];
+      console.log(location);
+        var mlat = $scope.locationsObj.savedLocations[i].lat;
+        var mlng = $scope.locationsObj.savedLocations[i].lng;
+        var dLat  = rad(mlat - lat);
+        var dLong = rad(mlng - lng);
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+            Math.cos(rad(lat)) * Math.cos(rad(lat)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c;
+        distances[i] = d;
+        if ( closest == -1 || d < distances[closest] ) {
+            closest = i;
+        }
+    }
+
+
+  var selectedMode = 'DRIVING';
+
+  directionsService.route({
+
+    origin: {lat: lat, lng: lng},  // Haight.
+    destination: {lat: $scope.locationsObj.savedLocations[closest].lat, lng: $scope.locationsObj.savedLocations[closest].lng},  // Ocean Beach.
+    travelMode: google.maps.TravelMode[selectedMode]
+  }, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      console.log(response);
+      directionsDisplay.setOptions({ preserveViewport: true });
+      directionsDisplay.setDirections(response);
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+
+    //alert($scope.locationsObj.savedLocations[closest].nombre);
+}
+
+var gps; 
+  $scope.toggleGPS = function(){
+  if($scope.toggleGPS.checked){
+    gps = window.setInterval(find_closest_marker,5000); 
+
+  }else{
+    gps = window.clearInterval(gps);
+      console.log("no");
+  }
+};
+
+
+     
     }]);

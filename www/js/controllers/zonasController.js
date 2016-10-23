@@ -30,6 +30,7 @@ app.controller('zonasController',
 
                         }, function (error) {
                             alert(error);
+                                                       console.log(error);
                             alert('Ha ocurrido un error');
                       });
 
