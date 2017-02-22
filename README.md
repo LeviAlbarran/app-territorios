@@ -1,7 +1,7 @@
 # app-territorios
-Front-End Aplicacion hibrida para geolocalizacion de puntos de interes, censos y visitas.
+Front-End Aplicación híbrida para geolocalización de puntos de interés, censos y visitas.
 
-Esta aplicacion hibrida fue desarrollada con el objetivo de geolocalizar direcciones de extrajeras registradas en censos. Se usaron la s siguientes herrmaientas:
+Esta aplicación híbrida fue desarrollada con el objetivo de geolocalizar direcciones de extrajeros registrados en censos. Se usaron las siguientes herramientas:
 
 * Ionic
 * AngularJS
@@ -11,4 +11,4 @@ Esta aplicacion hibrida fue desarrollada con el objetivo de geolocalizar direcci
 * JSPDF
 * Animate CSS 
 
->Mas informacion o demostracion: levianderson.laal@gmail.com
+>Mas información o demostración: levianderson.laal@gmail.com
