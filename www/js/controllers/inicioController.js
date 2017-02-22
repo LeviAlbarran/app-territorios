@@ -64,8 +64,9 @@ function LoginController($auth, $location, $state, $scope, $ionicModal, $window)
   
     var auth = $auth.getPayload();
     if (auth) {
+        console.log(auth);
         console.log('login');
-        $state.go('app.map');
+        $state.go('app.dashboard');
     }; 
     
 
@@ -85,21 +86,20 @@ function LoginController($auth, $location, $state, $scope, $ionicModal, $window)
         })
         .then(function(resp){
             console.log(resp); 
-
             // Si se ha logueado correctamente, lo tratamos aquí.
             // Podemos también redirigirle a una ruta
-        //$location.path("/map");
+        //$location.path("/dashboard");
 
         if (resp.data.token) {
                var auth = $auth.getPayload();           
                 console.log(auth.conx);
                 localStorage.setItem("apiBase", auth.conx);
-               $state.go('app.map');
+               $state.go('app.dashboard');
         }else{
 
             $scope.responseLogin = resp.data.response;
         };
-  //       window.location = "/www/#/map";
+  //       window.location = "/www/#/dashboard";
         })
         .catch(function(response){
               console.log(response);
@@ -121,13 +121,14 @@ function LogoutController($scope, $rootScope, $auth, $location, usuariosService)
 */
 usuariosService.unUsuario('get', $rootScope.miUsuario._id).ejecutar(function (data) {
                         console.log(data);
-                        $scope.usuario=data;
+                        $rootScope.usuario=data;
                         $rootScope.miUsuario.nivel= data.nivel;
                         $rootScope.miUsuario.id_congregacion= data.id_congregacion;
                         $rootScope.miUsuario.nombre= data.nombre;
                         $rootScope.miUsuario.correo= data.correo;
                         $rootScope.auth= data.permisos.sistema;
-  
+                        $rootScope.usuario.sync=true;
+   
 
                         }, function (error) {
                             alert(error);

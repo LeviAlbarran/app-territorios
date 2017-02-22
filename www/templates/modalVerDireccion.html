@@ -4,18 +4,19 @@
     <h1 class="title">{{direccionSeleccionada.id}} - {{direccionSeleccionada.genero}} {{direccionSeleccionada.nombre}}</h1>
 
     <div class="buttons">
-      <button class="button button-clear" ng-click="modalVerDireccion.hide();">X</button>
+      <button class="button" ng-click="modalVerDireccion.hide();">X</button>
     </div>
 
   </ion-header-bar>
 
   <ion-content class="padding">
-
+  <ion-scroll  direction="y" style=" height: 100%">
    <div class="list card">
-<a class="item item-icon-left assertive" href="#">
+<a class="item item-icon-left assertive" >
     <i class="icon ion-map"></i>
     Direccion
-    <p><b>Zona: </b>{{direccionSeleccionada.zona}} - <b>Edificacion: </b>{{direccionSeleccionada.edificacion}}</p>
+    <p><b>Zona: </b>{{direccionSeleccionada.zona}}
+     <p><b>Territorio: </b>{{direccionSeleccionada.territorio}} - <b>Edificacion: </b>{{direccionSeleccionada.edificacion}}</p>
     <p class="item-text-wrap">{{direccionSeleccionada.direccion}}</p>
   </a>
   
@@ -31,11 +32,15 @@
 
   </div>
   <div class="item item-divider">
-    <a href="#/app/direcciones/{{direccionSeleccionada._id}}" ng-click="modalVerDireccion.hide();" class="button button-block button-positive" ng-hide="auth.direcciones.modificar==false"> Modificar Direccion</a>
+    <button ng-click="imprimirDirecciones();" class="button button-block button-positive" ng-hide="auth.direcciones.modificar==false || direccionTemporal"> Imprimir Direccion</button>
+    <a href="#/app/direcciones/{{direccionSeleccionada._id}}" ng-hide="direccionTemporal" ng-click="modalVerDireccion.hide();" class="button button-block button-positive" ng-hide="auth.direcciones.modificar==false ||  direccionTemporal"> Modificar Direccion</a>
+
+    <a href="#/app/verificacion/{{direccionSeleccionada._id}}" ng-show="direccionTemporal" ng-click="modalVerDireccion.hide();" class="button button-block button-positive"> Modificar Direccion</a>
   
   </div> 
    
 </div>
+</ion-scroll>
   </ion-content>
 
 </ion-modal-view>

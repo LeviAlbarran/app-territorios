@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova', 'igTruncate','satellizer', 'base64', 'pdf']);
+var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova', 'igTruncate','satellizer', 'base64', 'pdf', 'directive.loading']);
 
   app.run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {
@@ -20,6 +20,41 @@ var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova',
 
     });
   })
+
+  angular.module('directive.loading', [])
+
+    .directive('loading',   ['$http', '$ionicLoading' ,function ($http, $ionicLoading)
+    {
+        return {
+            restrict: 'A',
+            link: function (scope, elm, attrs)
+            {
+
+                scope.isLoading = function () {
+                    return $http.pendingRequests.length > 0;
+                };
+
+                scope.$watch(scope.isLoading, function (v)
+                {
+                    if(v){
+                      document.getElementById('loading').style.color = "block";
+                      console.log("mostrar");
+
+                      $ionicLoading.show({
+                        template: '<ion-spinner icon="android"></ion-spinner> <br/> Cargando..'
+                      });
+                       // elm.show();
+                    }else{
+                      document.getElementById('loading').style.color = "none";
+                       // elm.hide();
+                      $ionicLoading.hide();
+                       console.log("ocultar");
+                    }
+                });
+            }
+        };
+
+    }]);
 
 
 
@@ -64,6 +99,18 @@ var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova',
 
       })
 
+      .state('app.dashboard', {
+        url: "/dashboard",
+        views: {
+          'menuContent' :{
+            templateUrl: "templates/dashboard.html", 
+            controller: 'dashboardController'
+          },
+          cache: false
+        }
+      })
+
+
       .state('app.map', {
         url: "/map",
         views: {
@@ -104,7 +151,9 @@ var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova',
             templateUrl: "templates/nuevoTerritorio.html",
             controller:'nuevoTerritorioController'
           }
-        }
+        },
+        cache: false
+    
       })
        .state('app.territoriosDirecciones', {
         url:"/territoriosDirecciones/:idTerritorios",
@@ -123,6 +172,16 @@ var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova',
           'menuContent' :{
             templateUrl: "templates/territoriosMapa.html",
             controller:'territoriosMapaController'
+          },
+          cache: false
+        }
+      })
+      .state('app.territoriosListarDirecciones', {
+        url:"/territoriosListarDirecciones/:idTerritorios",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/territoriosListarDirecciones.html",
+            controller:'territoriosListarDireccionesController'
           },
           cache: false
         }
@@ -147,7 +206,8 @@ var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova',
             templateUrl: "templates/zonasDetalles.html",
            controller:'zonasDetallesController'
           }
-        }
+        },
+        cache: false
       })
 
        .state('app.nuevaZona', {
@@ -195,6 +255,28 @@ var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova',
         cache: false
       })
 
+    .state('app.verificacion', {
+      url:"/verificacion",
+      views:{
+        'menuContent':{
+          templateUrl: "templates/verificacion.html",
+          controller: 'verificacionController'
+        }
+      },
+      cache:false
+    })
+
+.state('app.verificacionDetalles', {
+        url:"/verificacion/:idDireccion",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/verificacionDetalles.html",
+           controller:'verificacionDetallesController'
+          }
+        },
+        cache: false
+      })
+
 .state('app.direccionesDetalles', {
         url:"/direcciones/:idDireccion",
         views:{
@@ -212,6 +294,17 @@ var app = angular.module('ngMap', ['ionic', 'ngRoute','ngResource', 'ngCordova',
           'menuContent' :{
             templateUrl: "templates/miPerfil.html",
            controller:'miPerfilController'
+          }
+        },
+        cache: false
+      })
+
+.state('app.sincronizacion', {
+        url:"/sincronizacion",
+        views:{
+          'menuContent' :{
+            templateUrl: "templates/sincronizacion.html",
+           controller:'sincronizacionController'
           }
         },
         cache: false

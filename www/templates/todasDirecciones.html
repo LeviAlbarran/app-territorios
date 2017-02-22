@@ -1,13 +1,40 @@
 <ion-view view-title="Direcciones" cache-view="false">
+
+  <ion-header-bar class="bar-light bar-subheader">
+      <input type="text" placeholder="Buscar direccion..." ng-model="search">
+    </ion-header-bar>
+
   <ion-content>
-	<ion-list>
+  <ion-scroll  direction="y" style=" height: 100%">
 	 <ion-list>
-	        <ion-item nav-clear class="item item-icon-right" menu-close ng-repeat="direcciones in direcciones  | orderBy:'nombre':false " >
+	        <ion-item nav-clear class="item item-icon-right" menu-close ng-repeat="direcciones in direcciones  | orderBy:'nombre':false | filter : search " >
 	        {{direcciones.id}}- {{direcciones.nombre}}    
-	         <p>{{direcciones.nombreTerritorio}}</p>
+	        <!-- <p>{{direcciones.nombreTerritorio}}</p>-->
+	         <p>
+            <span ng-show="direcciones.id_a"> AID: {{direcciones.id_a}}</span> 
+            <span ng-hide="direcciones.territorio">- Sin Territorio</span> 
+            <span ng-hide="direcciones.lat && direcciones.lng">- Sin mapa</span>     
+           </p>
 	         <i ng-click="buttonVerDireccion('{{direcciones._id}}');" class="icon ion-eye"></i>
 	        </ion-item>
 	      </ion-list>
-	</ion-list>
+	 </ion-scroll>
+	        <script id="pdf-viewer.html" type="text/ng-template">  
+            <ion-modal-view>
+            <ion-header-bar>
+                <h1 class="title"></h1> 
+                <button ng-click="descargarPdf()" class="button button-icon icon ion-ios-cloud-download-outline"> Descargar</button>
+                <button ng-click="modalpdf.hide()" class="button button-icon icon ion-android-close"></button>
+            </ion-header-bar>
+            <ion-content>
+                <ng-pdf ng-if="pdfUrl" template-url="templates/viewer.html" canvasid="pdf" scale="page-fit"></ng-pdf>  
+            </ion-content>
+            </ion-modal-view>
+        </script>  
   </ion-content>
+   <ion-footer-bar align-title="left" class="bar-assertive">
+          <div class="buttons">
+            <button class="button" ng-click="buttonNuevaDireccion()" >Nueva Direccion</button>
+          </div>
+        </ion-footer-bar>
 </ion-view>

@@ -44,13 +44,25 @@ app.controller('territoriosMapaController',
           $scope.modalCambiarTerritorio = modal;
         });
 
+        $ionicModal.fromTemplateUrl('templates/modalVerDireccion.html', {
+            scope: $scope,
+            animation: 'slide-in-up'
+          }).then(function(modal) {
+              $scope.modalVerDireccion = modal;
+
+            });
+
+ 
       $scope.imprimir = function(){
-          var content = window.document.getElementById("containerMapAll"); // get you map details
-          var newWindow = window.open(); // open a new window
+        /*  var content = window.document.getElementById("containerMapAll"); // get you map details
+          var newWindow = window.open();
+           // open a new window
           newWindow.document.write(content.innerHTML); // write the map into the new window
           newWindow.document.getElementById("mapTodasDirecciones").style.height = "400px";
           newWindow.document.getElementById("mapTodasDirecciones").style.width = "700px";
-          newWindow.print(); 
+          newWindow.print(); */
+          window.print();
+
       }
 
     
@@ -235,12 +247,11 @@ $scope.verDireciones = function () {
                           // console.log(data.length);
                           for (i = 0; i < data.length; i++) {  
                            $scope.locationsObj.savedLocations.push(data[i]);
-                            
-
                            console.log(i)
-                           console.log(data[i]);                   
-                           $scope.marcarDirecciones(i);
-
+                           console.log(data[i]); 
+                           if (data[i].lat && data[i].lng) {                  
+                             $scope.marcarDirecciones(i);
+                           };
                           }
                           console.log($scope.locationsObj)
 
@@ -293,6 +304,8 @@ infowindow = new google.maps.InfoWindow({
 
       $scope.marker = [];
       var j = 0;
+      var arrayTerritorio = [];
+      var arrayColor = ['387ef5', 'f237ba', '38ed6b', '8137e8', 'ff0000', 'f237ba', '38ed6b','f237ba', 'e03838', '387ef5'];
       $scope.marcarDirecciones = function(locationKey) {
         
           j = j + 1
@@ -319,14 +332,33 @@ infowindow = new google.maps.InfoWindow({
 
 
 //var image='<svg width="36" height="33" xmlns="http://www.w3.org/2000/svg"><g><title>background</title><rect fill="none" id="canvas_background" height="35" width="38" y="-1" x="-1" text-align="center"/><g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid" text-align="center"><rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%" text-align="center"/> </g> </g> <g><title>Layer 1</title><path id="svg_1" d="m17.812927,1.460289c-9.11084,0 -16.503174,3.930481 -16.503174,8.781288c0,4.850937 16.503174,21.218704 16.503174,21.218704s16.496857,-16.367767 16.496857,-21.218704c0,-4.850807 -7.38559,-8.781288 -16.496857,-8.781288zm0,12.978355c-4.357422,0 -7.888947,-1.877716 -7.888947,-4.197067s3.531525,-4.196877 7.888947,-4.196877s7.882324,1.879784 7.882324,4.196877s-3.531433,4.197067 -7.882324,4.197067z" stroke-width="1.5" stroke="#000000" fill="#ff0000" text-align="center"/><ellipse ry="7.5" rx="11" id="svg_3" cy="11.5" cx="17.5" stroke-width="1.5" stroke="#ff0000" fill="#ff0000" text-align="center"/><ellipse ry="0.5" id="svg_4" cy="209.5" cx="222.5" stroke-width="1.5" stroke="#ff0000" fill="#ff0000" text-align="center"/><text font-weight="bold" xml:space="preserve" text-anchor="start" font-family="Helvetica, Arial, sans-serif" font-size="NaN" text-align="center" id="svg_5" y="15.5" x="3.5" stroke-width="0" stroke="#000000" fill="#ffffff">'+location.id+'</text></g></svg>'; 
-var image = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2238%22%20height%3D%2238%22%20viewBox%3D%220%200%2038%2038%22%3E%0A%0A%3Cpath%20fill%3D%22%23ff0000%22%20fill-opacity%3D%220.50%22%20stroke%3D%22%23000000%22%20stroke-width%3D%221.3%22%20d%3D%22M34.305%2016.234c0%208.83-15.148%2019.158-15.148%2019.158S3.507%2025.065%203.507%2016.1c0-8.505%206.894-14.304%2015.4-14.304%208.504%200%2015.398%205.933%2015.398%2014.438z%22%2F%3E%0A%0A%3Ctext%20transform%3D%22translate(19%2018.5)%22%20fill%3D%22%23fff%22%20style%3D%22font-family%3A%20Arial%2C%20sans-serif%3Bfont-weight%3Abold%3Btext-align%3Acenter%3B%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%3E'+location.id+'%3C%2Ftext%3E%0A%3C%2Fsvg%3E';
+
+if(location.territorio){
+      var positionArrayTerritorio = arrayTerritorio.indexOf(location.territorio);
+      if (positionArrayTerritorio < 0) {
+          positionArrayTerritorio = arrayTerritorio.push(location.territorio);
+      }
+      var positionColor = positionArrayTerritorio;
+      var color =  arrayColor[positionColor];  
+      if(arrayTerritorio.length>9){
+        var positionColor = lastone = test.toString().split('').pop();
+        var color =  arrayColor[positionColor];        
+      }      
+       var image = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2238%22%20height%3D%2238%22%20viewBox%3D%220%200%2038%2038%22%3E%0A%0A%3Cpath%20fill%3D%22%23'+color+'%22%20fill-opacity%3D%220.50%22%20stroke%3D%22%23000000%22%20stroke-width%3D%221.3%22%20d%3D%22M34.305%2016.234c0%208.83-15.148%2019.158-15.148%2019.158S3.507%2025.065%203.507%2016.1c0-8.505%206.894-14.304%2015.4-14.304%208.504%200%2015.398%205.933%2015.398%2014.438z%22%2F%3E%0A%0A%3Ctext%20transform%3D%22translate(19%2018.5)%22%20fill%3D%22%23fff%22%20style%3D%22font-family%3A%20Arial%2C%20sans-serif%3Bfont-weight%3Abold%3Btext-align%3Acenter%3B%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%3E'+location.id+'%3C%2Ftext%3E%0A%3C%2Fsvg%3E';
+       
+}
+else{
+  var image = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2238%22%20height%3D%2238%22%20viewBox%3D%220%200%2038%2038%22%3E%0A%0A%3Cpath%20fill%3D%22%23000000%22%20fill-opacity%3D%220.50%22%20stroke%3D%22%23000000%22%20stroke-width%3D%221.3%22%20d%3D%22M34.305%2016.234c0%208.83-15.148%2019.158-15.148%2019.158S3.507%2025.065%203.507%2016.1c0-8.505%206.894-14.304%2015.4-14.304%208.504%200%2015.398%205.933%2015.398%2014.438z%22%2F%3E%0A%0A%3Ctext%20transform%3D%22translate(19%2018.5)%22%20fill%3D%22%23fff%22%20style%3D%22font-family%3A%20Arial%2C%20sans-serif%3Bfont-weight%3Abold%3Btext-align%3Acenter%3B%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%3E'+location.id+'%3C%2Ftext%3E%0A%3C%2Fsvg%3E';
+
+}
+
  //var image = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2238%22%20height%3D%2238%22%20viewBox%3D%220%200%2038%2038%22%3E%3Cpath%20fill%3D%22%23808080%22%20stroke%3D%22%23ccc%22%20stroke-width%3D%22.5%22%20d%3D%22M34.305%2016.234c0%208.83-15.148%2019.158-15.148%2019.158S3.507%2025.065%203.507%2016.1c0-8.505%206.894-14.304%2015.4-14.304%208.504%200%2015.398%205.933%2015.398%2014.438z%22%2F%3E%3Ctext%20transform%3D%22translate%2819%2018.5%29%22%20fill%3D%22%23fff%22%20style%3D%22font-family%3A%20Arial%2C%20sans-serif%3Bfont-weight%3Abold%3Btext-align%3Acenter%3B%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%3E' + location.id + '%3C%2Ftext%3E%3C%2Fsvg%3E';
 
          $scope.marker[j] = new google.maps.Marker({
                 position: locationMarker,
                 map: $scope.map,
                 title: location.nombre,
-                label: " " +location.id + " ",
+                //label: " " +location.id + " ",
                 animation: google.maps.Animation.DROP,
                 icon: image
               });
@@ -374,23 +406,57 @@ var image = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F20
                buttonClicked: function(index) {
                 switch (index) {
                     case 0:
-                        $scope.modifierLocation = {};
+                        $scope.direccionSeleccionada = {};
                         //Modificar
-                        $scope.idModifierDireccion = location._id;
-                        $scope.modifierLocation.id = location.id;
-                        $scope.modifierLocation.territorio = location.territorio;
-                        $scope.modifierLocation.genero = location.genero;
-                        $scope.modifierLocation.edificacion = location.edificacion;
-                        $scope.modifierLocation.zona = location.zona;
-                        $scope.modifierLocation.condicion = location.condicion;
-                        $scope.modifierLocation.publicador = location.publicador;
-                        $scope.modifierLocation.nombre = location.nombre;
-                        $scope.modifierLocation.comentarios = location.comentarios;
-                        $scope.modifierLocation.direccion = location.direccion;
-                        $scope.modifierLocation.lat = location.lat;
-                        $scope.modifierLocation.lng = location.lng;
-                        // console.log(modifierLocation.id);
-                        $scope.modalModifier.show();
+                        
+                        console.log(location._id);
+                    directionService.unaDireccion('get', location._id).ejecutar(function (data) {                    
+                          $scope.direccionSeleccionada=data;
+                          
+                          for (var i = 0; i < $scope.territorios.length; i++) {
+                            if ($scope.direccionSeleccionada.territorio== $scope.territorios[i]._id) {
+                              $scope.direccionSeleccionada.territorio = $scope.territorios[i].nombre;
+                            }
+                          };
+                          for (var i = 0; i < $scope.zonas.length; i++) {
+                            if ($scope.direccionSeleccionada.zona== $scope.zonas[i]._id) {
+                              $scope.direccionSeleccionada.zona = $scope.zonas[i].nombre;
+                            }
+                          };
+                          console.log($scope.direccionSeleccionada);
+                          //$scope.infopdf[0] = data; //para imprimir
+                          //console.log($scope.infopdf);
+                          var latitud = parseFloat(data.lat.toFixed(14));
+                          var longitud = parseFloat(data.lng.toFixed(14));
+                          var image = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2238%22%20height%3D%2238%22%20viewBox%3D%220%200%2038%2038%22%3E%0A%0A%3Cpath%20fill%3D%22%23ff0000%22%20fill-opacity%3D%220.50%22%20stroke%3D%22%23000000%22%20stroke-width%3D%221.3%22%20d%3D%22M34.305%2016.234c0%208.83-15.148%2019.158-15.148%2019.158S3.507%2025.065%203.507%2016.1c0-8.505%206.894-14.304%2015.4-14.304%208.504%200%2015.398%205.933%2015.398%2014.438z%22%2F%3E%0A%0A%3Ctext%20transform%3D%22translate(19%2018.5)%22%20fill%3D%22%23fff%22%20style%3D%22font-family%3A%20Arial%2C%20sans-serif%3Bfont-weight%3Abold%3Btext-align%3Acenter%3B%22%20font-size%3D%2212%22%20text-anchor%3D%22middle%22%3E'+data.id+'%3C%2Ftext%3E%0A%3C%2Fsvg%3E';
+                          var direccionLatlng = { lat: latitud, lng: longitud };
+                          var mapOptions = {
+                            center: new google.maps.LatLng(latitud, longitud),
+                            zoom: 15,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP,
+                            navigationControl: true,
+                            streetViewControl: true,
+                            mapTypeControl: true,                            
+                            zoomControl: true,                           
+                            scaleControl: true,
+                            streetViewControl: true,
+                          };
+                          $scope.mapDireccion = new google.maps.Map(document.getElementById('mapDireccion'), mapOptions);
+                          $scope.marker = new google.maps.Marker({
+                            position: direccionLatlng,
+                            map: $scope.mapDireccion,
+                            title: location.nombre,
+                            // label: " " +data.id + " ",
+                            animation: google.maps.Animation.DROP,
+                            icon: image
+                          });
+                          $scope.marker.setMap($scope.mapDireccion);
+                        }, function (error) {
+                            alert(error);
+                            alert('Ha ocurrido un error');
+                      });
+
+                    $scope.modalVerDireccion.show();
 
                     break;
                     case 1:

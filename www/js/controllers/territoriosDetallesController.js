@@ -27,9 +27,28 @@ app.controller('territoriosDetallesController',
       ) {
       console.log($stateParams.idTerritorios);
 
+       directionService.direccionesTerritorio('get', $stateParams.idTerritorios).ejecutar(function (data) {
+                        $scope.infopdf= data;
+                               
+                         
+                        }, function (error) {
+                            alert(error);
+                            alert('Ha ocurrido un error');
+                      });
+
+
        territoriosService.unTerritorio('get', $stateParams.idTerritorios).ejecutar(function (data) {
                            console.log(data);
                           $scope.territorio=data;
+
+                        }, function (error) {
+                            alert(error);
+                            alert('Ha ocurrido un error');
+                      });
+
+       territoriosService.todosTerritorios('get').ejecutar(function (data) {
+                           console.log(data);
+                          $scope.territorios=data;
 
                         }, function (error) {
                             alert(error);
@@ -141,15 +160,6 @@ $scope.buttonOcultarModal= function(){
 
 $scope.direcciones;  
 
-directionService.todasDirecciones('get').ejecutar(function (data) {
-                           
-                          $scope.direcciones=data;
-                          console.log($scope.direcciones);
-
-                        }, function (error) {
-                            alert(error);
-                            alert('Ha ocurrido un error');
-                      });
       
 
 var saveTerritoriosAnteriores;
@@ -226,6 +236,25 @@ var saveTerritoriosAnteriores;
 
       $scope.buttonAsignarDirecciones = function (){
 
+
+directionService.listDirecciones('get').ejecutar(function (data) {
+                           
+          $scope.direcciones=data;
+          console.log($scope.direcciones);
+          for (var i = 0; i < $scope.direcciones.length; i++) {
+            var position =  $scope.infopdf.map(function(element){ return element.territorio}).indexOf($scope.direcciones[i].territorio);                
+            if (position>=0) {
+              $scope.direcciones[i].checked =  true;
+            }
+
+           var position2 =  $scope.territorios.map(function(element){ return element._id}).indexOf($scope.direcciones[i].territorio);                
+            if (position2>=0) {
+              $scope.direcciones[i].nombreTerritorio = $scope.territorios[position2].nombre;
+            }
+          }
+          
+ 
+/*                        
        territoriosService.todosTerritorios('get').ejecutar(function (data) {
                            console.log(data);
                           //$scope.territorio=data;
@@ -254,9 +283,12 @@ var saveTerritoriosAnteriores;
                             alert(error);
                             alert('Ha ocurrido un error');
                       });
-         
+  */       
           $scope.modalAsignarDirecciones.show();
-
+          }, function (error) {
+              alert(error);
+              alert('Ha ocurrido un error');
+          });
       };   
 
       $scope.modificarTerritorio = function() {  
@@ -303,7 +335,7 @@ var saveTerritoriosAnteriores;
     });
 
 $scope.imprimirDirecciones =  function(){ 
-        var dataPdf = $scope.getDummyData();
+    /*    var dataPdf = $scope.infopdf;
 
         pdfService.createPdf(dataPdf, false)
                         .then(function(pdf) {
@@ -313,52 +345,185 @@ $scope.imprimirDirecciones =  function(){
                             // Display the modal view
                             $scope.modalpdf.show();
                         });
+*/
+    var d = new Date();
+    var hoy = d.getDate();
+    var mes = d.getMonth();
+    var anio = d.getFullYear();
+    var fechaHoy =  hoy +"/"+ mes + "/" + anio;                   
+    console.log($scope.infopdf);
+    var doc = new jsPDF();
+    var hlinea= 0;
+   for (var j = 0; j < $scope.infopdf.length; j++) {
+    if(!$scope.infopdf[j].genero){
+      $scope.infopdf[j].genero = '';
+    }
+    if(!$scope.infopdf[j].nombre){
+      $scope.infopdf[j].nombre = '_________________________';
+    }
+
+    if(!$scope.infopdf[j].zona){
+      $scope.infopdf[j].zona = '_________';
+    }
+    if(!$scope.infopdf[j].publicador){
+      $scope.infopdf[j].publicador = '___________';
+    }
+    if(!$scope.infopdf[j].telefono){
+      $scope.infopdf[j].telefono = '___________';
+    }
+    if(!$scope.infopdf[j].edificacion){
+      $scope.infopdf[j].edificacion = '___________';
+    }
+    if(!$scope.infopdf[j].telefono){
+      $scope.infopdf[j].telefono = '___________';
+    }
+    if(!$scope.infopdf[j].condicion){
+      $scope.infopdf[j].condicion = '___________';
+    }
+
+
+    doc.setFontSize(12);
+   // console.log(j);
+    doc.text(15, 10 + hlinea,  $scope.infopdf[j].id + ' - ' + $scope.infopdf[j].genero + ' '+ $scope.infopdf[j].nombre);
+    //doc.text(30, 10,'Nombre: ' + );
+    doc.setFontSize(8);
+    doc.text(23, 16 + hlinea, 'Zona: ' + $scope.infopdf[j].zona);
+    doc.text(80, 16 + hlinea, 'Condicion: ' + $scope.infopdf[j].condicion);
+    doc.text(140, 16 + hlinea, 'Telefono: ' + $scope.infopdf[j].numero);
+    
+    doc.text(15, 21 + hlinea, 'Edificacion: ' + $scope.infopdf[j].edificacion);
+    doc.text(137, 21 + hlinea, 'Publicador: ' + $scope.infopdf[j].publicador);
+
+    var splitcomment = doc.splitTextToSize($scope.infopdf[j].direccion, 150);
+    //console.log($scope.infopdf[j].direccion);
+    //console.log(splitcomment);
+    for (var x = 0; x < splitcomment.length; x++) {
+      if (x == 0) {
+        doc.text(17, 26 + hlinea, 'Direccion: ' + splitcomment[0]);
+      }
+      else{
+       doc.text(17, 26 + hlinea + 3,  splitcomment[1]);   
+      }
+    }
+
+    var splitcomment = doc.splitTextToSize($scope.infopdf[j].comentarios, 150);
+    for (var x = 0; x < splitcomment.length; x++) {
+      if (x == 0) {
+        doc.text(15, 33 + hlinea, 'Observaciones: ' + splitcomment[0]);
+      }
+      else{
+       doc.text(15, 33 + hlinea + 3,  splitcomment[1]);   
+      }
+    }
+
+
+
+    doc.setFontSize(7);
+    doc.text(95, 40 + hlinea, 'Simbolos   V - vuelva    O - ocupado(a)    NC -  no interesado(a)   |   Impreso el: ' + fechaHoy);
+    doc.setFontSize(7);
+
+    var columns = [
+    {title: "Fecha", dataKey: "fecha"},
+    {title: "Hora", dataKey: "hora"}, 
+    {title: "Sim.", dataKey: "sim"}, 
+    {title: "Publicador", dataKey: "publicador"},
+    {title: "Observaciones", dataKey: "observaciones"}  
+    ];
+    var rows = [];
+    for (var i = 0; i < 14; i++) {
+      rows.push({"fecha": '', "hora": "", "sim": "", "publicador": "", "observaciones": "" });
+    }
+
+    doc.autoTable(columns, rows, {
+        styles: {fontSize: 5, rowHeight: 5, lineColor: 0},
+        headerStyles: {fillColor: 200, cellPadding: 1, rowHeight: 6, fontStyle: 'bold', textColor: 0,  lineWidth: 0.2, lineColor: 0, fontSize: 7, overflow :'linebreak'},
+        columnStyles: {
+            fecha: {columnWidth: 17},
+            hora: {columnWidth: 17},
+            sim: {columnWidth: 10},
+            publicador: {columnWidth: 36},
+            observaciones: {columnWidth: 100}
+        },
+        margin: {top: 43 + hlinea, left: 15},
+        theme: 'grid'
+        //addPageContent: function(data) {
+        //    doc.text("Header", 40, 30);
+        //}
+    });
+
+  var hlinea = hlinea + 130;
+
+  if( j % 2 == 0 ) {
+      doc.addPage();
+    console.log("add page"); 
+          var columns = [
+    {title: "Fecha", dataKey: "fecha"},
+    {title: "Hora", dataKey: "hora"}, 
+    {title: "Sim.", dataKey: "sim"}, 
+    {title: "Publicador", dataKey: "publicador"},
+    {title: "Observaciones", dataKey: "observaciones"}  
+   ];
+    var rows = [];
+    for (var k = 0; k < 16; k++) {
+      rows.push({"fecha": '', "hora": "", "sim": "", "publicador": "", "observaciones": "" });
+    }
+   
+    doc.autoTable(columns, rows, {
+        styles: {fontSize: 5, rowHeight: 5, lineColor: 0},
+        headerStyles: {fillColor: 200, cellPadding: 1, rowHeight: 6, fontStyle: 'bold', textColor: 0,  lineWidth: 0.2, lineColor: 0, fontSize: 7, overflow :'linebreak'},
+        columnStyles: {
+            fecha: {columnWidth: 17},
+            hora: {columnWidth: 17},
+            sim: {columnWidth: 10},
+            publicador: {columnWidth: 36},
+            observaciones: {columnWidth: 100}
+        },
+        margin: {top: 15, left: 15},
+        theme: 'grid'
+        //addPageContent: function(data) {
+        //    doc.text("Header", 40, 30);
+        //}
+    }); 
+ 
+    doc.autoTable(columns, rows, {
+        styles: {fontSize: 5, rowHeight: 5, lineColor: 0},
+        headerStyles: {fillColor: 200, cellPadding: 1, rowHeight: 6, fontStyle: 'bold', textColor: 0,  lineWidth: 0.2, lineColor: 0, fontSize: 7, overflow :'linebreak'},
+        columnStyles: {
+            fecha: {columnWidth: 17},
+            hora: {columnWidth: 17},
+            sim: {columnWidth: 10},
+            publicador: {columnWidth: 36},
+            observaciones: {columnWidth: 100}
+        },
+        margin: {top: 15 + 130 , left: 15},
+        theme: 'grid'
+        //addPageContent: function(data) {
+        //    doc.text("Header", 40, 30);
+        //}
+    });
+
+      doc.addPage();
+      hlinea=0;
+  }
+        
+  }
+
+    doc.autoPrint();  // <<--------------------- !!
+    doc.output('dataurlnewwindow');
+   
+
+
     };
 
 $scope.descargarPdf = function(){
-   var dataPdf = $scope.getDummyData();
+   var dataPdf = $scope.infopdf;
 
         pdfService.createPdf(dataPdf, true)
                         .then(function(pdf) {
                         console.log('imprimiendo');
                         });
 
-}
-
-
-
- $scope.setDefaultsForPdfViewer = function($scope) {  
-    $scope.scroll = 0;
-    $scope.loading = 'loading';
-  }
-  
-    $scope.onError = function (error) {
-        console.error(error);
-    };
-
-    $scope.onLoad = function () {
-        $scope.loading = '';
-    };
-
-    $scope.onProgress = function (progress) {
-        console.log(progress);
-    };
-
-
-
- directionService.direccionesTerritorio('get', $stateParams.idTerritorios).ejecutar(function (data) {
-                        $scope.infopdf= data;
-                               
-                         
-                        }, function (error) {
-                            alert(error);
-                            alert('Ha ocurrido un error');
-                      });
-$scope.getDummyData = function() {  
-       return $scope.infopdf;    
-}
-
-
+    }
 
     }]);
 

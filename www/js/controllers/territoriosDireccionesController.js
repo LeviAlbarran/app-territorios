@@ -39,12 +39,13 @@ app.controller('territoriosDireccionesController',
   
 
 $scope.imprimir = function(){
-  var content = window.document.getElementById("containerMap"); // get you map details
-var newWindow = window.open(); // open a new window
-newWindow.document.write(content.innerHTML); // write the map into the new window
-newWindow.document.getElementById("mapDirecciones").style.height = "400px";
-newWindow.document.getElementById("mapDirecciones").style.width = "700px";
-newWindow.print(); 
+//  var content = window.document.getElementById("containerMap"); // get you map details
+//var newWindow = window.open(); // open a new window
+//newWindow.document.write(content.innerHTML); // write the map into the new window
+//newWindow.document.getElementById("mapDirecciones").style.height = "400px";
+//newWindow.document.getElementById("mapDirecciones").style.width = "700px";
+//newWindow.print(); $("containerMap").printElement();
+window.print();
 }
 
     
@@ -253,6 +254,7 @@ infowindow = new google.maps.InfoWindow({
           j = j + 1
           var location = $scope.locationsObj.savedLocations[locationKey];
           console.log(location);
+          if (location.lat && location.lng) {
           var latitud = parseFloat(location.lat.toFixed(14));
           var longitud = parseFloat(location.lng.toFixed(14));
           console.log(latitud);
@@ -281,7 +283,7 @@ var image = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F20
                 position: locationMarker,
                 map: $scope.map,
                 title: location.nombre,
-                label: " " +location.id + " ",
+               // label: " " +location.id + " ",
                 animation: google.maps.Animation.DROP,
                 icon: image
               });
@@ -303,7 +305,7 @@ var image = 'data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F20
              console.log(location);         
              $scope.show(location, j);
           });
-
+        }
 
           //findNearestPlace(latitud, longitud);
         }

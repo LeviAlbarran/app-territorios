@@ -1,5 +1,5 @@
 app.factory('usuariosService', function ($resource){
-	
+	apiBase = localStorage.getItem("apiBase");
 	 return { 
         todosUsuarios: function (method){
             if(method=='get'){

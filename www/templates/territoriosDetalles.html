@@ -6,26 +6,25 @@
             <h3>{{territorio.nombre}}</h3>
             <br/>
  		<hr>
-        <div class="card">
+        <div class="card"><!--
             <div class="item item-divider">
                 ID
             </div>
             <div class="item item-text-wrap">
                 <input type="text" ng-model="territorio.id" id="territorio.id" value="{{territorio.id}}" placeholder="{{territorio.id}}">
-            </div>
+            </div>-->
             <div class="item item-divider">
-                Nombre
+                Cambiar Nombre
             </div>
             <div class="item item-text-wrap">
                   <input type="text" ng-model="territorio.nombre" id="territorio.nombre" value="{{territorio.nombre}}" placeholder="{{territorio.nombre}}">
             </div> 
 			 <div class="item item-divider">
+                    <a class="button button-block button-positive" ng-click="modificarTerritorio()" ng-hide="auth.territorio.modificar==false"> Guardar Cambios</a>
                     <a class="button button-block button-assertive" ng-click="eliminarTerritorio()" ng-hide="auth.territorio.eliminar==false"> Eliminar</a>
-                    <a class="button button-block button-positive" href="#/app/territoriosDirecciones/{{territorio._id}}" > Ir Direcciones</a>
+                    <a class="button button-block button-positive" href="#/app/territoriosDirecciones/{{territorio._id}}" > Mapa </a>
+                    <a class="button button-block button-positive" href="#/app/territoriosListarDirecciones/{{territorio._id}}" > Listar Direcciones</a>
                     <a class="button button-block button-positive" ng-click="buttonAsignarDirecciones()" ng-hide="auth.territorio.asignar==false">Asignar Direcciones</a>
-
-			  		<a class="button button-block button-positive" ng-click="modificarTerritorio()" ng-hide="auth.territorio.modificar==false"> Guardar Cambios</a>
-
                     <a class="button button-block button-positive" ng-click="imprimirDirecciones()" > Imprimir Direcciones</a>
 			 </div> 
 			

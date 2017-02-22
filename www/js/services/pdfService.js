@@ -34,15 +34,17 @@ function base64ToUint8Array(base64) {
 
 function createDocumentDefinition(dataDirections) {
 
-console.log(dataDirections);
-    var celdas=  [];
-        celdas.push({ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'});
+    //console.log(dataDirections);
+   // var celdas=  [];
+  //celdas.push({ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'});
+
+
 
 
 
 var contenido = [];
 
-for (var i =0; i <dataDirections.length ; i++) {
+for (var i = 0; i < dataDirections.length ; i++) {
   
 if (!dataDirections[i].nombre) {
     dataDirections[i].nombre = '';
@@ -65,7 +67,32 @@ if (!dataDirections[i].edificacion) {
 if (!dataDirections[i].comentarios) {
     dataDirections[i].comentarios = '';
 };
+if (!dataDirections[i].numero) {
+    dataDirections[i].numero = '';
+};
 
+
+        var celdas =   [[ 
+                            { text: 'Fecha', style: 'itemsTableHeader' },
+                            { text: 'Hora', style: 'itemsTableHeader' },
+                            { text: 'Sim.', style: 'itemsTableHeader' },                            
+                            { text: 'Publicador', style: 'itemsTableHeader' },
+                            { text: 'Tema Conversado', style: 'itemsTableHeader' },
+                            { text: 'Publicacion', style: 'itemsTableHeader' },
+                            { text: 'Observaciones', style: 'itemsTableHeader' }
+                        ],
+                        [{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio' },{ text: '', style: 'espacio'}],
+                        [{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio' },{ text: '', style: 'espacio'}],
+                        [{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio' },{ text: '', style: 'espacio'}],
+                        [{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio' },{ text: '', style: 'espacio'}],
+                        [{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio' },{ text: '', style: 'espacio'}],
+                        [{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio' },{ text: '', style: 'espacio'}],
+                        [{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio' },{ text: '', style: 'espacio'}],
+                        [{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio' },{ text: '', style: 'espacio'}],
+                        [{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio' },{ text: '', style: 'espacio'}],
+                        [{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio' },{ text: '', style: 'espacio'}],
+                        [{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio'  },{ text: '', style: 'espacio' },{ text: '', style: 'espacio'}]];  
+                     
 
 
 
@@ -73,24 +100,20 @@ if (!dataDirections[i].comentarios) {
                 columns: [
                     {
                       // auto-sized columns have their widths based on their content
-                      width: '75%',
+                      width: '70%',
                       text: 'ID:  1302 - Nombre: '+ dataDirections[i].nombre,
                       style: 'subheader'
                     },
                    
                     {
                       // % width
-                      width: '25%',
+                      width: '30%',
                       text: 'Publicador: ' +dataDirections[i].publicador
                     }
                   ],
                   columnGap: 10,
                   style: 'encabezado'
-                });
-    contenido.push({ text: '-'});
-
-
-        contenido.push({
+                },{
                 columns: [
                     {
                       // auto-sized columns have their widths based on their content
@@ -113,147 +136,52 @@ if (!dataDirections[i].comentarios) {
                       width: '25%',
                       text: 'Edificacion: ' + dataDirections[i].edificacion
                     }
+                    
                   ],
                   columnGap: 10,
                   style: 'encabezado'
-                });
-
-        contenido.push({ text: '-'});
-        contenido.push({ text: 'Direccion: ' + dataDirections[i].direccion});
-        contenido.push({ text: '-'});
-        contenido.push({ text: 'Observaciones: ' + dataDirections[i].comentarios});
-        contenido.push({ text: '-'});
-
-
-        contenido.push({
+                }, {
+                columns: [
+                  { 
+                    width: "85%",
+                    text: 'Direccion: ' + dataDirections[i].direccion},
+                  {
+                      width: "15%",
+                      text: '# '+dataDirections[i].numero
+                    }
+                  ],
+                  columnGap: 10,
+                  style: 'encabezado'
+                  },
+                { text: 'Observaciones: ' + dataDirections[i].comentarios, style: 'encabezado'},
+                {
                 style: 'itemsTable',
                 table: {
                     widths: [27, 20, 20, 75, 75, 75 , "*" ],
-                    body: [
-                        [ 
-                            { text: 'Fecha', style: 'itemsTableHeader' },
-                            { text: 'Hora', style: 'itemsTableHeader' },
-                            { text: 'Sim.', style: 'itemsTableHeader' },                            
-                            { text: 'Publicador', style: 'itemsTableHeader' },
-                            { text: 'Tema Conversado', style: 'itemsTableHeader' },
-                            { text: 'Publicacion', style: 'itemsTableHeader' },
-                            { text: 'Observaciones', style: 'itemsTableHeader' }
-                        ],
-                        [{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'}],
-                        [{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'}],
-                        [{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'}],
-                        [{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'}],
-                        [{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'}],
-                        [{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'}],
-                        [{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'}],
-                        [{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'}],
-                        [{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'}],
-                        [{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'}],
-                        [{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio'  },{ text: '-', style: 'espacio' },{ text: '-', style: 'espacio'}],  
-                    ]          
+                    body: celdas
+                             
                 }
-            });
+            },{ text: '', style: 'margin'});
 
-    contenido.push({ text: '-', style: 'margin'});
-
-     if( i % 2 == 0 ) {
-       contenido.push({text:'-', pageBreak: 'after'})
+     if( i % 2 == 0 ) {      
+          contenido.push({text:'-', pageBreak: 'after'})
     };
 }
-
-/*
-var contenido = [
-
-                {
-                columns: [
-                    {
-                      // auto-sized columns have their widths based on their content
-                      width: '75%',
-                      text: 'ID:  1302 - Nombre: Sra Camenza Napolitano',
-                      style: 'subheader'
-                    },
-                   
-                    {
-                      // % width
-                      width: '25%',
-                      text: 'Publicador: Levi Albarran'
-                    }
-                  ],
-                  columnGap: 10,
-                  style: 'encabezado'
-                },
-                 { text: '-'},
-                {
-                columns: [
-                    {
-                      // auto-sized columns have their widths based on their content
-                      width: '25%',
-                      text: 'Genero: Mujer'
-                    },
-                   
-                    {
-                      // fixed width
-                      width: "25%",
-                      text: 'Condicion: Descendiente'
-                    },
-                    {
-                      // % width
-                      width: '25%',
-                      text: 'Zona: Sur'
-                    },
-                    {
-                      // % width
-                      width: '25%',
-                      text: 'Edificacion: Sur'
-                    }
-                  ],
-                  columnGap: 10,
-                  style: 'encabezado'
-                },
-                { text: '-'},
-                { text: 'Direccion: Calle 86 A'},
-                { text: '-'},
-                { text: 'Observaciones: Interasado, la Madre se llama Antonella'},
-
-
-
-                      {
-                style: 'itemsTable',
-                table: {
-                    widths: [20, 20, 20, 75, 75, 75 , "*" ],
-                    body: [
-                        [ 
-                            { text: 'Fecha', style: 'itemsTableHeader' },
-                            { text: 'Hora', style: 'itemsTableHeader' },
-                            { text: 'Sim.', style: 'itemsTableHeader' },                            
-                            { text: 'Publicador', style: 'itemsTableHeader' },
-                            { text: 'Tema Conversado', style: 'itemsTableHeader' },
-                            { text: 'Publicacion', style: 'itemsTableHeader' },
-                            { text: 'Observaciones', style: 'itemsTableHeader' }
-                        ],
-                        celdas
-
-                    ]
-                }
-            },
-
-        ]*/
-
-
-
-
-
 
     var dd = {
         content: contenido,
         styles: {
+
+            encabezado:{
+              margin: [0, 0, 0, 10]
+            },
             
             margin:{
                 margin: [0, 5, 0, 15]
             },
 
             espacio:{
-              color: 'white'
+              margin: [0, 5, 0, 10]
             },
 
             negritas:{

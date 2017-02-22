@@ -1,5 +1,5 @@
 app.factory('territoriosService',function($resource){
-	
+	apiBase = localStorage.getItem("apiBase");
 return{
 		     
 		todosTerritorios: function(method){

@@ -12,14 +12,8 @@
   <ion-content class="padding">
 
     <form name="locationForm" ng-submit="saveLocation()">
-
       <div class="list">
-       <label class="item item-input">
-                <div class = "input-label">
-                  ID
-                </div>
-                    <input type="number" ng-model="newLocation.id" placeholder="ID" ng-minlength="1" ng-maxlength="100" required>
-        </label>
+ 
         <label class = "item item-input item-select">
                 <div class = "input-label">
                     Genero
@@ -34,6 +28,9 @@
 
        
             <label class="item item-input">
+                <div class = "input-label">
+                    Nombre
+                </div>
                 <input type="text" ng-model="newLocation.nombre" placeholder="Nombre" ng-minlength="1" ng-maxlength="100" required>
             </label>    
              
@@ -44,39 +41,67 @@
                     <select ng-model="newLocation.condicion" >
                           <option style="display:none" value="">Seleccione</option>
                           <option  value="Nativo">Nativo</option>
-                          <option  value="Decendiente">Decendiente</option>
+                          <option  value="Descendiente">Descendiente</option>
+                          <option  value="Otro">Otro</option>
                      </select>
                 </label>
 
           <label class="item item-input">
-                    <input type="text" ng-model="newLocation.direccion" placeholder="direccion" ng-minlength="1" ng-maxlength="100" required>
+                <div class = "input-label">
+                    Direccion
+                </div><!--
+                    <input type="text" ng-model="newLocation.direccion" placeholder="direccion" ng-minlength="1" ng-maxlength="100" required>-->
+                <textarea rows="4" cols="50" ng-model="newLocation.direccion" placeholder="direccion">
+                </textarea>
         </label>
-        <label class = "item item-input item-select">
+        <label class = "item item-input">
                       <div class = "input-label">
                             Edificacion
                       </div>
-                     <select ng-model="newLocation.edificacion" >
+            <!--   <select ng-model="newLocation.edificacion" >
                       <option style="display:none" value="">Seleccione</option>
                       <option  value="Casa">Casa</option>
                       <option  value="Edificio">Edificio</option>
                       <option  value="Local">Local</option>
                       <option  value="Otro">Otro</option>
-                 </select>  
+                   </select>-->
+                  <input type="text" ng-model="newLocation.edificacion" placeholder="edificacion" ng-minlength="1" ng-maxlength="100" >  
                </label>
+        
 
-         <label class = "item item-input item-select">
+         <label class = "item item-input">
            <div class = "input-label">
               Zona
            </div>
-          
-           <select ng-model="newLocation.zona" ng-options="zona._id as zona.nombre for zona in zonas">
+          <!--
+           <select ng-model="newLocation.zona" ng-options="zona.nombre as zona.nombre for zona in zonas">
                 <option style="display:none" value="">Seleccione</option>
-           </select>
+           </select>-->
+           <input type="text" ng-model="newLocation.zona" placeholder="zona" ng-minlength="1" ng-maxlength="100">
+
         </label>
+        <label class="item item-input">
+                <div class = "input-label">
+                    Publicador
+                </div>
+                <input type="text" ng-model="newLocation.publicador" placeholder="Publicador" ng-minlength="1" ng-maxlength="100">
+        </label>    
+        <label class="item item-input">
+                <div class = "input-label">
+                    Telefono
+                </div>
+                <input type="text" ng-model="newLocation.numero" placeholder="Numero" ng-minlength="1" ng-maxlength="100" >
+        </label>    
+        
         
         
         <label class="item item-input">
-                    <input type="text" ng-model="newLocation.comentarios" placeholder="comentarios" ng-minlength="1" ng-maxlength="100" required>
+               <div class = "input-label">
+                    Comentarios
+                </div>
+                   <!-- <input type="text" ng-model="newLocation.comentarios" placeholder="comentarios" ng-minlength="1" ng-maxlength="100" required>-->
+                  <textarea rows="4" cols="50" ng-model="newLocation.comentarios" placeholder="comentarios">
+                 </textarea>
         </label>
                  
        

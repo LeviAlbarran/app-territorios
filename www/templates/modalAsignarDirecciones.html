@@ -6,15 +6,18 @@
     <div class="buttons">
       <button class="button button-clear" ng-click="buttonOcultarModal()">X</button>
     </div>
-
+     
   </ion-header-bar>
+ <ion-header-bar class="bar-light bar-subheader">
+      <input type="text" placeholder="Buscar direccion..." ng-model="search">
+    </ion-header-bar>
 
   <ion-content class="padding">
-
+  <ion-scroll  direction="y" style=" height: 100%">
     <form name="locationForm" ng-submit="saveLocation()">
       <ion-list>
 
-        <ion-item nav-clear class="item item-icon-right" menu-close ng-repeat="direcciones in direcciones track by $index" >
+        <ion-item nav-clear class="item item-icon-right" menu-close ng-repeat="direcciones in direcciones | filter : search track by $index" >
         <ion-checkbox ng-model="direcciones.checked" ng-change="checkboxChangeTerritorio('{{direcciones._id}}', '{{$index}}')"> 
 
         {{direcciones.id}}- {{direcciones.nombre}}    
@@ -26,15 +29,10 @@
         </ion-item>
 
       </ion-list>
-      
-      <div class="padding">
-
-        <button class="button button-block button-balanced" ng-disabled="locationForm.$invalid">Guardar</button>
-
-      </div>
 
     </form>
-
+</ion-scroll>
   </ion-content>
+
 
 </ion-modal-view>

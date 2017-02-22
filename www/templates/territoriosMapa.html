@@ -1,4 +1,43 @@
 <style type="text/css">
+
+@media print{
+     nav-bar-container{
+      display: none !important;
+    }
+     .bar-subheader {
+        display: none !important;
+    }
+    .bar-footer {
+      display: none !important;
+    }
+    .platform-ios.platform-cordova:not(.fullscreen) .bar-header:not(.bar-subheader) {
+      display: : none !important;
+  }
+  #containerMapAll{
+    height: 400px !important;
+  }
+  .buttons{
+    display: none;
+  }
+  #seleccionable{
+      -webkit-box-shadow: 0px 2px 0px 9000px rgb(255, 255, 255);
+    }
+    .icon{
+      display: none;
+    }
+
+  h1, h2, h3, h4{
+    display: none !important;
+  }
+  .title{
+    display: none !important;
+  }
+    #seleccionable{
+    display: none !important;
+    }
+}
+
+
 #seleccionable {
     top: 108px;
     position: fixed;

@@ -12,8 +12,9 @@
   <ion-content class="padding">
 
 <ion-list>
-
-  <ion-checkbox ng-repeat="territorio in territorios track by territorio._id" ng-model="territorio.permiso" ng-checked="territorio.permiso" ng-change="checkboxChangeTerritorio('{{territorio._id}}', {{territorio.permiso}})" > {{territorio.nombre}}</ion-checkbox>
+  <ion-scroll  direction="y" style=" height: 100%">
+ 	 <ion-checkbox ng-repeat="territorio in territorios track by territorio._id" ng-model="territorio.permiso" ng-checked="territorio.permiso" ng-change="checkboxChangeTerritorio('{{territorio._id}}', {{territorio.permiso}})" > {{territorio.nombre}}</ion-checkbox>
+  </ion-scroll>
   
 </ion-list>
 </ion-content>

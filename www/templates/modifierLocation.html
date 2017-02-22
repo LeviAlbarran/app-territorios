@@ -12,14 +12,8 @@
   <ion-content class="padding">
 
     <form name="locationForm" ng-submit="submitModifierLocation()">
-
       <div class="list">
-          <label class="item item-input">
-                <div class = "input-label">
-                  ID
-                </div>
-                <input type="number" ng-model="modifierLocation.id" placeholder="ID" ng-minlength="1" ng-maxlength="100" required>
-          </label>
+          
           <label class = "item item-input item-select">
                 <div class = "input-label">
                     Genero
@@ -46,39 +40,64 @@
                     <select ng-model="modifierLocation.condicion" >
                           <option style="display:none" value="">Seleccione</option>
                           <option  value="Nativo">Nativo</option>
-                          <option  value="Decendiente">Decendiente</option>
+                          <option  value="Descendiente">Descendiente</option>
+                          <option  value="Otro">Otro</option>
                      </select>
           </label>
 
           <label class="item item-input">
-                    <input type="text" ng-model="modifierLocation.direccion" placeholder="direccion" ng-minlength="1" ng-maxlength="100" required>
+                      <div class = "input-label">
+                            Direccion
+                      </div>
+                    <!--<input type="text" ng-model="modifierLocation.direccion" placeholder="direccion" ng-minlength="1" ng-maxlength="100" required>-->
+                    <textarea rows="4" cols="50" ng-model="modifierLocation.direccion" placeholder="direccion">
+                    </textarea>
         </label>
-        <label class = "item item-input item-select">
+        <label class = "item item-input">
                       <div class = "input-label">
                             Edificacion
                       </div>
-                     <select ng-model="modifierLocation.edificacion" >
+                    <!-- <select ng-model="modifierLocation.edificacion" >
                       <option style="display:none" value="">Seleccione</option>
                       <option  value="Casa">Casa</option>
                       <option  value="Edificio">Edificio</option>
                       <option  value="Local">Local</option>
                       <option  value="Otro">Otro</option>
-                 </select>  
+                 </select>-->
+                      <input type="text" ng-model="modifierLocation.edificacion" placeholder="edificacion" ng-minlength="1" ng-maxlength="100" >   
                </label>
+ 
 
-         <label class = "item item-input item-select">
+         <label class = "item item-input">
            <div class = "input-label">
               Zona
            </div>
-          
-           <select ng-model="modifierLocation.zona" ng-options="zona._id as zona.nombre for zona in zonas">
+           <input type="text" g-model="modifierLocation.zona" placeholder="zona" ng-minlength="1" ng-maxlength="100">
+
+           <!--<select ng-model="modifierLocation.zona" ng-options="zona.nombre as zona.nombre for zona in zonas">
                 <option style="display:none" value="">Seleccione</option>
-           </select>
+           </select>-->
         </label>
-        
-        
         <label class="item item-input">
-                    <input type="text" ng-model="modifierLocation.comentarios" placeholder="comentarios" ng-minlength="1" ng-maxlength="100" required>
+                <div class = "input-label">
+                    Publicador
+                </div>
+                <input type="text" ng-model="modifierLocation.publicador" placeholder="Publicador" ng-minlength="1" ng-maxlength="100">
+        </label> 
+        <label class="item item-input">
+                <div class = "input-label">
+                    Telefono
+                </div>
+                <input type="text" ng-model="modifierLocation.numero" placeholder="Numero" ng-minlength="1" ng-maxlength="100">
+        </label>        
+        <label class="item item-input">
+                    <div class = "input-label">
+                      Comentarios
+                    </div>
+                    <!--
+                    <input type="text" ng-model="modifierLocation.comentarios" placeholder="comentarios" ng-minlength="1" ng-maxlength="100" required>-->
+                  <textarea rows="4" cols="50" ng-model="modifierLocation.comentarios" placeholder="comentarios">
+                 </textarea>
         </label>
                  
        

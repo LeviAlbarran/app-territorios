@@ -1,0 +1,76 @@
+<ion-view view-title="Sincronizacion" cache-view="false">
+  <ion-content>
+   <ion-scroll  direction="y" style=" height: 100%">
+        <div class="list">
+            <div class="item item-divider">
+              Ultima Fecha de Sincronizacion: {{dateSync}}    <span ng-show="dateSync" style="color: red">No hay fecha disponible</span>
+            </div>
+              <div class="item item-divider">
+                <button class="button button-block button-positive" ng-click="buttonSync()">
+                  Sincronizar Ahora
+                </button>  
+              </div>
+              <div class="card" ng-show="dataSincronizacion.direccionesNuevas">
+                <div class="item item-divider">
+                  Direcciones Creadas
+                </div>
+                <ion-list>
+                  <ion-item nav-clear menu-close ng-repeat="direccionesNuevas in dataSincronizacion.direccionesNuevas | filter : search ">
+                    {{direccionesNuevas.id}} - {{direccionesNuevas.nombre}}
+                  </ion-item>
+                </ion-list>
+              </div>
+              <div class="card">
+                <div class="item item-divider" ng-show="dataSincronizacion.direccionesModificadas">
+                  Direcciones Modificadas
+                </div>
+                <ion-list>
+                  <ion-item nav-clear menu-close ng-repeat="direccionesModificadas in dataSincronizacion.direccionesModificadas | filter : search ">
+                    {{direccionesModificadas.id}} -  {{direccionesModificadas.nombre}}
+                  </ion-item>
+                </ion-list>
+              </div>
+              <div class="card" ng-show="dataSincronizacion.direccionesEliminadas">
+                <div class="item item-divider">
+                  Direcciones Eliminadas
+                </div>
+                <ion-list>
+                  <ion-item nav-clear menu-close ng-repeat="direccionesEliminadas in dataSincronizacion.direccionesEliminadas | filter : search ">
+                    {{direccionesModificads.id}} -  {{direccionesEliminadas.nombre}}
+                  </ion-item>
+                </ion-list>
+              </div>
+              <div class="card" ng-show="dataSincronizacion.direccionesTMPNuevas">
+                <div class="item item-divider">
+                  Direcciones Pendientes Creadas
+                </div>
+                <ion-list>
+                  <ion-item nav-clear menu-close ng-repeat="direccionesTMPNuevas in dataSincronizacion.direccionesTMPNuevas | filter : search ">
+                    {{direccionesTMPNuevas.id}} - {{direccionesTMPNuevas.nombre}}
+                  </ion-item>
+                </ion-list>
+              </div>
+              <div class="card" ng-show="dataSincronizacion.direccionesTMPModificadas">
+                <div class="item item-divider">
+                  Direcciones Pendientes Modificadas
+                </div>
+                <ion-list>
+                  <ion-item nav-clear menu-close ng-repeat="direccionesTMPModificadas in dataSincronizacion.direccionesTMPModificadas | filter : search ">
+                    {{direccionesTMPModificadas.id}} -  {{direccionesTMPModificadas.nombre}}
+                  </ion-item>
+                </ion-list>
+              </div>
+              <div class="card" ng-show="dataSincronizacion.direccionesTMPEliminadas">
+                <div class="item item-divider">
+                  Direcciones Pendientes Eliminadas
+                </div>
+                <ion-list>
+                  <ion-item nav-clear menu-close ng-repeat="direccionesTMPEliminadas in dataSincronizacion.direccionesTMPEliminadas | filter : search ">
+                    {{direccionesTMPEliminadas.id}} -  {{direccionesTMPEliminadas.nombre}}
+                  </ion-item>
+                </ion-list>
+              </div>
+        </div>
+    </ion-scroll>
+  </ion-content>
+</ion-view>

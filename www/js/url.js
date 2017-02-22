@@ -8,14 +8,15 @@ var apiBaseUsuarios = "http://"+server2+"/api";
 
 //var server2 = 'localhost:5000';
 //var apiBaseUsuarios = "http://"+server2+"/api";
-var apiBase = localStorage.getItem("apiBase"); 
-console.log(apiBase);
+//var apiBase = localStorage.getItem("apiBase"); 
+//console.log(apiBase);
 
 var direc = {
-
-    direcciones: apiBase + "/direccion",
-    territorios: apiBase + "/territorios",
-    zonas: apiBase + "/zonas"
+    direcciones: localStorage.getItem("apiBase") + "/direccion",
+    direccionesTMP: localStorage.getItem("apiBase") + "/direccionTMP",
+    territorios: localStorage.getItem("apiBase") + "/territorios",
+    zonas: localStorage.getItem("apiBase") + "/zonas",
+    sincronizacion: localStorage.getItem("apiBase") + "/sincronizacion"
 };
 
 var direc2 = {

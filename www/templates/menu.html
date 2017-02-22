@@ -21,34 +21,46 @@
       <h1 class="title">{{miUsuario.nombre}}</h1>
     </header>
     
+<div class="loading-spiner-holder" id="loading" data-loading ><div class="loading-spiner"><img src="..." />Cargando</div></div>
 
     <ion-content class="has-header">
 
       <ion-list>
-
-        <ion-item nav-clear menu-close class="item-icon-left" href="#/app/map">
+        <ion-item nav-clear menu-close class="item-icon-left" href="#/app/dashboard">
           <i class="icon ion-pin" ></i>
-             Verificacion
+             Principal
         </ion-item>
-        <ion-item nav-clear menu-close class="item-icon-left" href="#/app/territorios">
+        <ion-item nav-clear menu-close class="item-icon-left" href="#/app/map">
           <i class="icon ion-map" ></i>
-              Territorios
-        </ion-item>
-        <ion-item nav-clear menu-close class="item-icon-left" href="#/app/zonas">
-          <i class="icon ion-ios-navigate-outline" ></i>
-              Zonas
-        </ion-item>
-        <ion-item ng-show="miUsuario.nivel==1" nav-clear menu-close class="item-icon-left" href="#/app/usuarios">
-          <i class="icon ion-ios-people" ></i>
-              Usuarios
+              Mapa
         </ion-item>
         <ion-item nav-clear menu-close class="item-icon-left" href="#/app/direcciones">
           <i class="icon ion-location" ></i>
               Direcciones
         </ion-item>
+        <ion-item nav-clear menu-close class="item-icon-left" href="#/app/territorios">
+          <i class="icon ion-map" ></i>
+              Carpetas
+        </ion-item>
+      <!--  <ion-item nav-clear menu-close class="item-icon-left" href="#/app/zonas">
+          <i class="icon ion-ios-navigate-outline" ></i>
+              Zonas
+        </ion-item>-->
+        <ion-item nav-clear menu-close class="item-icon-left" href="#/app/verificacion">
+          <i class="icon ion-location" ></i>
+              Verificacion
+        </ion-item>
+        <ion-item ng-show="miUsuario.nivel==1" nav-clear menu-close class="item-icon-left" href="#/app/usuarios">
+          <i class="icon ion-ios-people" ></i>
+              Usuarios
+        </ion-item>
         <ion-item nav-clear menu-close class="item-icon-left" href="#/app/perfil">
           <i class="icon ion-ios-person" ></i>
               Mi Perfil
+        </ion-item>
+        <ion-item nav-clear menu-close class="item-icon-left" href="#/app/sincronizacion">
+          <i class="icon ion-ios-loop-strong" ></i>
+              Sincronizacion
         </ion-item>
 
          <ion-item nav-clear menu-close class="item-icon-left" ng-click="logOut.logOut()">

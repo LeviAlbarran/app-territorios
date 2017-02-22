@@ -2,14 +2,27 @@
   <ion-nav-buttons side="right">
     <a href="#/app/territoriosMapa" ng-hide="auth.territorio.asignar==false" class="button button-icon icon ion-map"></a>
   </ion-nav-buttons>
+   <ion-header-bar class="bar-light bar-subheader">
+      <input type="text" placeholder="Buscar territorio..." ng-model="search">
+   </ion-header-bar>
+
 
   <ion-content>
-<ion-list>
+  <ion-scroll  direction="y" style=" height: 100%">
+      <ion-list>
 
-        <ion-item nav-clear menu-close ng-repeat="territorio in territorios track by territorio._id" href="#/app/territorios/{{territorio._id}}">
+        <ion-item nav-clear menu-close ng-repeat="territorio in territorios | filter : search " href="#/app/territorios/{{territorio._id}}">
           {{territorio.nombre}}
         </ion-item>
-</ion-list>
-<a class="button button-block button-large icon-right ion-plus-round button-positive" href="#/app/nuevoTerritorio" style="position: fixed; bottom: 10px;" ng-hide="auth.territorio.crear==false"> Nuevo Territorio</a>
+  </ion-list>
+</ion-scroll>
+
+
+<!--<a class="button button-block button-large icon-right ion-plus-round button-positive" href="#/app/nuevoTerritorio" style="position: fixed; bottom: 10px;" ng-hide="auth.territorio.crear==false"> Nuevo Territorio</a>-->
   </ion-content>
+<ion-footer-bar align-title="left" class="bar-assertive">
+    <div class="buttons">
+        <a class="button" href="#/app/nuevoTerritorio" ng-hide="auth.territorio.crear==false">Nuevo Territorio</a>
+    </div>
+</ion-footer-bar>
 </ion-view>

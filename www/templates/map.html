@@ -1,8 +1,52 @@
+<style type="text/css">
+  .controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
 
+#place-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 300px;
+}
+
+#place-input:focus {
+  border-color: #4d90fe;
+}
+
+.pac-container {
+  font-family: Roboto;
+}
+
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+
+</style>
 <ion-view title="Direcciones" cache-view="false">
 
   <ion-nav-buttons side="left">
-    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   
 
@@ -28,6 +72,7 @@
 
       </ion-list>
       <div id="containerMap"  style="height: 100%; width:100%"> 
+         <input id="place-input" class="controls" type="text" placeholder="Buscar Lugares">
         <div id="map" data-tap-disabled="true" style="height: 100%; width:100%"></div>
       </div>
       
@@ -41,7 +86,7 @@
       <!--
         <img src="images/marker.png" ng-show="state" style="position: fixed; height: 41px; top: 100px; bottom: 100px; right: 0px; left: 0px; margin-right: auto; margin-left: auto; margin-top: auto; margin-bottom: auto; z-index:999;">
       -->
-       <img src="images/marker.png" ng-show="state" style="position: fixed; height: 41px; top: 50%; margin-top: 20px; z-index: 999; width: auto; left: 50%; margin-left: -13px;">
+       <img src="images/marker.png" ng-show="state" style="position: fixed; height: 41px; top: calc(50% - 64px); margin-top: 20px; z-index: 999; width: auto; left: 50%; margin-left: -13px;">
 
        </ion-content>
 

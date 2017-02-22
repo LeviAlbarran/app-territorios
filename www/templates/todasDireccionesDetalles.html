@@ -1,5 +1,6 @@
 <ion-view view-title="Direcciones" cache-view="false">
   <ion-content>
+    <ion-scroll  direction="y" style=" height: 100%">
     <form >
         <div class="list">
           <div class="details" style="margin:8px; text-align: center;">
@@ -8,12 +9,7 @@
             <hr>
             <div class="card">
               <div class="list">
-                <label class="item item-input">
-                      <div class = "input-label">
-                        ID
-                      </div>
-                      <input type="number" ng-model="direccion.id" placeholder="ID" ng-minlength="1" ng-maxlength="100" required>
-                </label>
+         
                 <label class = "item item-input item-select">
                       <div class = "input-label">
                           Genero
@@ -39,37 +35,61 @@
                     <select ng-model="direccion.condicion" >
                           <option style="display:none" value="">Seleccione</option>
                           <option  value="Nativo">Nativo</option>
-                          <option  value="Decendiente">Decendiente</option>
+                          <option  value="Descendiente">Descendiente</option>
+                          <option  value="Otro">Otro</option>
                      </select>
                 </label>
 
                 <label class="item item-input">
-                            <input type="text" ng-model="direccion.direccion" placeholder="direccion" ng-minlength="1" ng-maxlength="100" required>
+                    <div class = "input-label">
+                          Direccion
+                    </div>
+                    <textarea rows="4" cols="50" ng-model="direccion.direccion" placeholder="comentarios">
+                    </textarea>
+
                 </label>
-                <label class = "item item-input item-select">
+                <label class = "item item-input ">
                         <div class = "input-label">
                               Edificacion
                         </div>
-                       <select ng-model="direccion.edificacion" >
-                        <option style="display:none" value="">Seleccione</option>
-                        <option  value="Casa">Casa</option>
-                        <option  value="Edificio">Edificio</option>
-                        <option  value="Local">Local</option>
-                        <option  value="Otro">Otro</option>
-                   </select>  
+                   <input type="text" ng-model="direccion.edificacion" placeholder="Edificacion" ng-minlength="1" ng-maxlength="100">
                  </label>
-                 <label class = "item item-input item-select">
+
+                 <label class = "item item-input ">
                    <div class = "input-label">
                       Zona
                    </div>                  
-                   <select ng-model="direccion.zona" ng-options="zona._id as zona.nombre for zona in zonas">
-                        <option style="display:none" value="">Seleccione</option>
+                    <input type="text" ng-model="direccion.zona" placeholder="Zona" ng-minlength="1" ng-maxlength="100">
+                </label>
+
+                <label class="item item-input">
+                  <div class = "input-label">
+                    Publicador
+                  </div>
+                  <input type="text" ng-model="direccion.publicador" placeholder="Publicador" ng-minlength="1" ng-maxlength="100">
+                </label> 
+                <label class="item item-input">
+                   <div class = "input-label">
+                     Telefono
+                   </div>
+                   <input type="text" ng-model="direccion.numero" placeholder="Numero" ng-minlength="1" ng-maxlength="100">
+                </label> 
+                <label class="item item-input">
+                    <div class = "input-label">
+                          Comentarios
+                    </div>
+                    <textarea rows="4" cols="50" ng-model="direccion.comentarios" placeholder="comentarios">
+                    </textarea>
+                </label>
+                <label class = "item item-input item-select">
+                   <div class = "input-label">
+                      Territorio
+                   </div>                  
+                   <select ng-model="direccion.territorio" ng-options="territorio.nombre as territorio.nombre for territorio in territorios">
+                        <option style="display:none" value="">Territorio</option>
                    </select>
                 </label>
-                <label class="item item-input">
-                            <input type="text" ng-model="direccion.comentarios" placeholder="comentarios" ng-minlength="1" ng-maxlength="100" required>
-                </label>
-                <div class="item tabs tabs-secondary tabs-icon-left">
+           <div ng-if="direccion.lat && direccion.lng" class="item tabs tabs-secondary tabs-icon-left">
                   <a class="tab-item" href="#">
                     LAT : {{direccion.lat | truncate:15}}
                   </a>
@@ -78,7 +98,8 @@
                   </a>
                 </div>
                 <div class="item item-divider">
-                 <a class="button button-block button-positive" ng-click="modificarDireccion()" ng-hide="auth.direcciones.modificar==false"> Guardar Cambios</a>
+                <a class="button button-block button-positive" ng-click="showModalMarcarDireccion()" > Asignar Mapa</a>
+                <a class="button button-block button-positive" ng-click="modificarDireccion()" ng-hide="auth.direcciones.modificar==false"> Guardar Cambios</a>
                </form>    
                 <a class="button button-block button-assertive" ng-click="eliminarDireccion()" ng-hide="auth.direcciones.eliminar==false"> Eliminar</a>
               
@@ -89,5 +110,6 @@
         </div>
         </div>
      
+     </ion-scroll>
   </ion-content>
 </ion-view>
